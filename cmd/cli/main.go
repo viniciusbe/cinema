@@ -2,6 +2,10 @@ package main
 
 import (
 	"bufio"
+	"cinema/internal/core/domain"
+	"cinema/internal/core/services"
+	gormdb "cinema/internal/handlers"
+	"cinema/internal/repositories"
 	"fmt"
 	"os"
 	"strings"
@@ -20,6 +24,17 @@ func StringPrompt() string {
 }
 
 func main() {
+	db, err := gormdb.SetupGormDB()
+
+	if err != nil {
+		panic(err)
+	}
+
+	db.AutoMigrate(&domain.Gender{})
+
+	genderRepo := repositories.NewGormGenderRepository(db)
+	genderService := services.NewGenderService(genderRepo)
+
 	input := ""
 
 	for {
@@ -52,6 +67,15 @@ func main() {
 
 			switch input {
 			case "1":
+				genders, err := genderService.ListAll()
+
+				if err != nil {
+
+				}
+
+				for _, gender := range genders {
+					fmt.Println(gender.Descricao)
+				}
 				fmt.Println("Listar")
 			case "2":
 				fmt.Println("Criar")
@@ -63,16 +87,6 @@ func main() {
 
 		}
 	}
-
-	// descricaoGenero := StringPrompt()
-
-	// db, err := gormdb.SetupGormDB()
-
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// db.AutoMigrate(&entity.Gender{})
 
 	// newGender := entity.Gender{Descricao: descricaoGenero}
 
