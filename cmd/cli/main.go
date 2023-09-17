@@ -1,27 +1,22 @@
 package main
 
 import (
-	"bufio"
-	"cinema/internal/core/domain"
-	"cinema/internal/core/services"
+	"cinema/internal/core/domain/entities"
+	"cinema/internal/handlers"
 	gormdb "cinema/internal/handlers"
-	"cinema/internal/repositories"
+	"cinema/internal/utils"
 	"fmt"
-	"os"
-	"strings"
 )
 
-func StringPrompt() string {
-	var s string
-	r := bufio.NewReader(os.Stdin)
-	for {
-		s, _ = r.ReadString('\n')
-		if s != "" {
-			break
-		}
-	}
-	return strings.TrimSpace(s)
-}
+const (
+	GendersOption   = "1"
+	DirectorsOption = "2"
+	FilmsOption     = "3"
+	SessionsOption  = "4"
+	TicketsOption   = "5"
+	BuyersOption    = "6"
+	ExitOption      = "s"
+)
 
 func main() {
 	db, err := gormdb.SetupGormDB()
@@ -30,72 +25,35 @@ func main() {
 		panic(err)
 	}
 
-	db.AutoMigrate(&domain.Gender{})
+	db.AutoMigrate(&entities.Gender{})
 
-	genderRepo := repositories.NewGormGenderRepository(db)
-	genderService := services.NewGenderService(genderRepo)
-
-	input := ""
-
+out:
 	for {
-		fmt.Println("Cinema - Menu principal:")
+		fmt.Printf("\nMenu do Cinema. Escolha uma opção:\n")
+		fmt.Println("  [1] Genders")
+		fmt.Println("  [2] Directors")
+		fmt.Println("  [3] Films")
+		fmt.Println("  [4] Sessions")
+		fmt.Println("  [5] Buyers")
+		fmt.Println("  [6] Tickets")
+		fmt.Printf("  [s] Sair\n\n")
 
-		fmt.Println("[1] Generos")
-		fmt.Println("[1] Filmes")
-		fmt.Println("[1] Diretores")
-		fmt.Println("[1] Ingressos")
+		selectedOption := utils.StringPrompt()
 
-		input = StringPrompt()
-
-		if input == "s" {
-			fmt.Println("Programa finalizado")
-			break
-		}
-
-		for {
-			fmt.Println("[1] Listar todos")
-			fmt.Println("[2] Criar")
-			fmt.Println("[3] Editar")
-			fmt.Println("[4] Excluir")
-			fmt.Println("[5] Voltar")
-
-			input = StringPrompt()
-
-			if input == "5" {
-				break
-			}
-
-			switch input {
-			case "1":
-				genders, err := genderService.ListAll()
-
-				if err != nil {
-
-				}
-
-				for _, gender := range genders {
-					fmt.Println(gender.Descricao)
-				}
-				fmt.Println("Listar")
-			case "2":
-				fmt.Println("Criar")
-			case "3":
-				fmt.Println("Editar")
-			case "4":
-				fmt.Println("Excluir")
-			}
-
+		switch selectedOption {
+		case GendersOption:
+			handlers.Gender(db)
+		case DirectorsOption:
+		case FilmsOption:
+		case SessionsOption:
+		case BuyersOption:
+		case TicketsOption:
+		case ExitOption:
+			break out
+		default:
+			fmt.Println("Opção inválida.")
 		}
 	}
 
-	// newGender := entity.Gender{Descricao: descricaoGenero}
-
-	// db.Create(&newGender)
-
-	// var matchingGender entity.Gender
-	// // var genders []entity.Gender
-	// db.First(&matchingGender, newGender.ID)
-
-	// fmt.Println(matchingGender.Descricao)
-
+	fmt.Println("Programa finalizado.")
 }
