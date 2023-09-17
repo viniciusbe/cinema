@@ -1,28 +1,37 @@
 package services
 
 import (
-	"cinema/internal/core/domain"
+	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/ports"
-	"fmt"
 )
 
 type Service struct {
 	repository ports.GenderRepository
 }
 
-func NewGenderService(repo ports.GenderRepository) *Service {
+func NewGenderService(r ports.GenderRepository) *Service {
 	return &Service{
-		repository: repo,
+		repository: r,
 	}
 }
 
-func (serv *Service) ListAll() ([]domain.Gender, error) {
-	genders, err := serv.repository.ListAll()
+func (s *Service) ListAll() ([]entities.Gender, error) {
+	genders, err := s.repository.ListAll()
 	if err != nil {
-		err = fmt.Errorf("create -> %w", err)
-		fmt.Println("ERROR: ", err)
 		return nil, err
 	}
 
 	return genders, nil
+}
+
+func (s *Service) Update(gender *entities.Gender) {
+	s.repository.Update(gender)
+}
+
+func (s *Service) Create(gender *entities.Gender) {
+	s.repository.Insert(gender)
+}
+
+func (s *Service) Delete(id string) {
+	s.repository.Delete(id)
 }

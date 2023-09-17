@@ -1,9 +1,10 @@
 package ports
 
-import "cinema/internal/core/domain"
+import "cinema/internal/core/domain/entities"
 
 type GenderRepository interface {
-	// Insert(gender *domain.Gender) error
-	// Update(gender *domain.Gender) (*domain.Gender, error)
-	ListAll() ([]domain.Gender, error)
+	ListAll() ([]entities.Gender, error)
+	Insert(gender *entities.Gender) error
+	Update(gender *entities.Gender) error
+	Delete(id string)
 }
