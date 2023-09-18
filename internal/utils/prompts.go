@@ -24,6 +24,22 @@ func StringPrompt(label string) string {
 	return strings.TrimSpace(s)
 }
 
+func IntPrompt(label string) uint {
+	var i uint
+
+	if len(label) > 0 {
+		fmt.Println(label)
+	}
+
+	_, err := fmt.Scan(&i)
+
+	if err != nil {
+		fmt.Println("Erro ao ler valor")
+	}
+
+	return i
+}
+
 func CrudMenuPrompt(label string) string {
 	fmt.Printf("\n  Menu de %s. Escolha uma opção:\n", label)
 	fmt.Println("    [1] Listar todos")

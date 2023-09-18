@@ -2,6 +2,7 @@ package filmcli
 
 import (
 	"cinema/internal/core/domain/entities"
+	"cinema/internal/utils"
 	"fmt"
 )
 
@@ -14,5 +15,10 @@ const (
 )
 
 func PrintFilm(film entities.Film) {
-	fmt.Printf("[%v]: %s\n", film.ID, film.Name)
+	fmt.Printf("[%v]: %s | %v | %s | %v | %v\n", film.ID, film.Name, film.Duration, film.Synopsis, film.Age, film.DirectorID)
+}
+
+func FilmPrompt(film *entities.Film) {
+	film.Name = utils.StringPrompt("Informe do nome do filme:")
+	film.Duration = utils.IntPrompt("Informe a duração do filme:")
 }

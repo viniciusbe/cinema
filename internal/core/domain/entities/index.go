@@ -21,9 +21,9 @@ type Director struct {
 type Film struct {
 	gorm.Model
 	Name       string
-	Duration   uint16
+	Duration   uint
 	Synopsis   string
-	Age        uint8
+	Age        uint
 	DirectorID uint
 	Genders    []Gender `gorm:"many2many:film_genders;"`
 	Sessions   []Session
@@ -33,7 +33,7 @@ type Session struct {
 	gorm.Model
 	Time     time.Time
 	Language string
-	Room     uint8
+	Room     uint
 	FilmID   uint
 	Tickets  []Ticket
 }
