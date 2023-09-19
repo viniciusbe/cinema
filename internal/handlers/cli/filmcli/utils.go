@@ -15,6 +15,9 @@ const (
 	BackOption    = "5"
 
 	NoAgeFilm = 0
+
+	MinGender       = 1
+	GenderExitValue = 0
 )
 
 func PrintFilmLabel() {
@@ -43,7 +46,7 @@ func PrintFilm(film entities.Film) {
 	fmt.Println("----------------------------------------")
 }
 
-func FilmPrompt() entities.Film {
+func FilmPrompt() (entities.Film, []uint) {
 	film := entities.Film{}
 	film.Name = utils.StringPrompt("Informe do nome do filme:")
 	film.Duration = utils.IntPrompt("Informe a duração do filme em minutos:")
@@ -51,5 +54,21 @@ func FilmPrompt() entities.Film {
 	film.Age = utils.IntPrompt("Informe a idade indicativa do filme (0 para livre):")
 	film.DirectorID = utils.IntPrompt("Informe o id do diretor do filme:")
 
-	return film
+	var gendersID []uint
+
+	for {
+		gender := utils.IntPrompt("Informe o id do gênero (0 para sair):")
+
+		if gender == GenderExitValue {
+			if len(gendersID) < MinGender {
+				fmt.Println("Informe ao menos um gênero")
+			} else {
+				break
+			}
+		} else {
+			gendersID = append(gendersID, gender)
+		}
+	}
+
+	return film, gendersID
 }

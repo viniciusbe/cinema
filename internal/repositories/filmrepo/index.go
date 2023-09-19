@@ -38,7 +38,14 @@ func (r *Repository) Find(id string) (*entities.Film, error) {
 	return film, nil
 }
 
-func (r *Repository) Insert(film *entities.Film) error {
+func (r *Repository) Insert(film *entities.Film, gendersID []uint) error {
+	var genders []entities.Gender
+	genderErr := r.DB.Find(&genders, gendersID).Error
+	if genderErr != nil {
+		return fmt.Errorf("Erro ao buscar genero(s) -> %w", genderErr)
+	}
+
+	film.Genders = genders
 	err := r.DB.Create(&film).Error
 	if err != nil {
 		return fmt.Errorf("Erro ao inserir filme -> %w", err)
@@ -64,3 +71,7 @@ func (r *Repository) Delete(id string) error {
 
 	return nil
 }
+
+// func (r *Repository) findGenders() {
+
+// }

@@ -32,8 +32,8 @@ func (s *Service) Update(film *entities.Film) error {
 	return s.repository.Save(film)
 }
 
-func (s *Service) Create(film *entities.Film) error {
-	return s.repository.Insert(film)
+func (s *Service) Create(film *entities.Film, gendersID []uint) error {
+	return s.repository.Insert(film, gendersID)
 }
 
 func (s *Service) Delete(id string) error {

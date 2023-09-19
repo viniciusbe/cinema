@@ -49,8 +49,8 @@ func ListAll(service *filmserv.Service) {
 }
 
 func Create(service *filmserv.Service) {
-	film := FilmPrompt()
-	err := service.Create(&film)
+	film, gendersID := FilmPrompt()
+	err := service.Create(&film, gendersID)
 
 	if err != nil {
 		fmt.Printf("%v\n", err)
