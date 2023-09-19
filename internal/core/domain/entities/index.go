@@ -25,6 +25,7 @@ type Film struct {
 	Synopsis   string
 	Age        uint
 	DirectorID uint
+	Director   Director
 	Genders    []Gender `gorm:"many2many:film_genders;"`
 	Sessions   []Session
 }

@@ -31,8 +31,7 @@ func IntPrompt(label string) uint {
 		fmt.Println(label)
 	}
 
-	_, err := fmt.Scan(&i)
-
+	_, err := fmt.Scanln(&i)
 	if err != nil {
 		fmt.Println("Erro ao ler valor")
 	}

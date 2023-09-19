@@ -1,7 +1,6 @@
 package filmcli
 
 import (
-	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/services/filmserv"
 	"cinema/internal/repositories/filmrepo"
 	"cinema/internal/utils"
@@ -43,21 +42,22 @@ func ListAll(service *filmserv.Service) {
 		return
 	}
 
-	fmt.Println("[id]: Nome")
+	fmt.Println("Filmes:")
 	for _, film := range films {
 		PrintFilm(film)
 	}
 }
 
 func Create(service *filmserv.Service) {
-	name := utils.StringPrompt("Digite o nome do filme:")
-	film := entities.Film{Name: name}
+	film := FilmPrompt()
 	err := service.Create(&film)
 
 	if err != nil {
-		fmt.Printf("Erro ao buscar filme -> %v\n", err)
+		fmt.Printf("%v\n", err)
 		return
 	}
+
+	fmt.Println("Filme criado com sucesso.")
 }
 
 func Edit(service *filmserv.Service) {
@@ -65,22 +65,19 @@ func Edit(service *filmserv.Service) {
 	film, err := service.Get(id)
 
 	if err != nil {
-		fmt.Printf("Erro ao buscar filme -> %v\n", err)
+		fmt.Printf("%v\n", err)
 		return
 	}
 
-	fmt.Println("[id]: Nome")
 	PrintFilm(*film)
 
-	description := utils.StringPrompt("Digite o nome do filme:")
-	film.Name = description
 	updateErr := service.Update(film)
 
 	if updateErr != nil {
-		fmt.Printf("Erro ao atualizar filme -> %v\n", updateErr)
+		fmt.Printf("%v\n", updateErr)
 		return
 	}
-	fmt.Println("filme atualizado com sucesso.")
+	fmt.Println("Filme atualizado com sucesso.")
 }
 
 func Delete(service *filmserv.Service) {
@@ -88,8 +85,8 @@ func Delete(service *filmserv.Service) {
 	err := service.Delete(id)
 
 	if err != nil {
-		fmt.Printf("Erro ao excluir filme -> %v\n", err)
+		fmt.Printf("%v\n", err)
 		return
 	}
-	fmt.Println("filme excluído com sucesso.")
+	fmt.Println("Filme excluído com sucesso.")
 }

@@ -15,11 +15,10 @@
   - [x] Edição
   - [x] Exclusão
 - Filmes
-  - [] Listar
-  - [] Detalhes
-  - [] Criação
+  - [x] Listar
+  - [x] Criação
   - [] Edição
-  - [] Exclusão
+  - [x] Exclusão
 - Sessões
   - [] Listar
   - [] Detalhes

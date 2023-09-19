@@ -3,6 +3,7 @@ package main
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/handlers/cli/directorcli"
+	"cinema/internal/handlers/cli/filmcli"
 	"cinema/internal/handlers/cli/gendercli"
 	"cinema/internal/handlers/gormdb"
 	"cinema/internal/utils"
@@ -48,6 +49,7 @@ out:
 		case DirectorsOption:
 			directorcli.Route(db)
 		case FilmsOption:
+			filmcli.Route(db)
 		case SessionsOption:
 		case BuyersOption:
 		case TicketsOption:

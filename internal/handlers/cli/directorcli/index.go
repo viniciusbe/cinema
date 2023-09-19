@@ -39,7 +39,7 @@ func ListAll(service *directorserv.Service) {
 	directors, err := service.ListAll()
 
 	if err != nil {
-		fmt.Printf("Erro ao buscar Diretores -> %v\n", err)
+		fmt.Printf("%v\n", err)
 		return
 	}
 
@@ -55,9 +55,10 @@ func Create(service *directorserv.Service) {
 	err := service.Create(&director)
 
 	if err != nil {
-		fmt.Printf("Erro ao buscar Diretor -> %v\n", err)
+		fmt.Printf("%v\n", err)
 		return
 	}
+	fmt.Println("Diretor criado com sucesso.")
 }
 
 func Edit(service *directorserv.Service) {
@@ -65,7 +66,7 @@ func Edit(service *directorserv.Service) {
 	director, err := service.Get(id)
 
 	if err != nil {
-		fmt.Printf("Erro ao buscar Diretor -> %v\n", err)
+		fmt.Printf("%v\n", err)
 		return
 	}
 
@@ -77,7 +78,7 @@ func Edit(service *directorserv.Service) {
 	updateErr := service.Update(director)
 
 	if updateErr != nil {
-		fmt.Printf("Erro ao atualizar Diretor -> %v\n", updateErr)
+		fmt.Printf("%v\n", updateErr)
 		return
 	}
 	fmt.Println("Diretor atualizado com sucesso.")
@@ -88,7 +89,7 @@ func Delete(service *directorserv.Service) {
 	err := service.Delete(id)
 
 	if err != nil {
-		fmt.Printf("Erro ao excluir Diretor -> %v\n", err)
+		fmt.Printf("%v\n", err)
 		return
 	}
 	fmt.Println("Diretor excluído com sucesso.")

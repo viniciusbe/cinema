@@ -20,7 +20,7 @@ func NewGormRepository(gormdb *gorm.DB) ports.FilmRepository {
 
 func (r *Repository) ListAll() ([]entities.Film, error) {
 	var films []entities.Film
-	err := r.DB.Find(&films).Error
+	err := r.DB.Preload("Genders").Preload("Director").Find(&films).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao listar filmes -> %w", err)
 	}
