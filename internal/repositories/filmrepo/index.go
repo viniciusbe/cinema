@@ -55,19 +55,18 @@ func (r *Repository) Insert(film *entities.Film, gendersID []uint) error {
 }
 
 func (r *Repository) Save(film *entities.Film, gendersID []uint) error {
-	var newGenders []entities.Gender
 	if len(gendersID) > 0 {
+		var newGenders []entities.Gender
 		r.DB.Find(&newGenders, gendersID)
+		replaceError := r.DB.Model(&film).Association("Genders").Replace(newGenders)
+		if replaceError != nil {
+			return fmt.Errorf("Erro ao atualizar gêneros do filme -> %w", replaceError)
+		}
 	}
 
 	err := r.DB.Save(&film).Error
 	if err != nil {
 		return fmt.Errorf("Erro ao atualizar filme -> %w", err)
-	}
-
-	replaceError := r.DB.Model(&film).Association("Genders").Replace(newGenders)
-	if replaceError != nil {
-		return fmt.Errorf("Erro ao atualizar filme -> %w", replaceError)
 	}
 
 	return nil
