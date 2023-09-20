@@ -14,6 +14,20 @@ const (
 	DeleteOption  = "4"
 	BackOption    = "5"
 
+	EditNameOption     = "1"
+	EditDurationOption = "2"
+	EditSynopsisOption = "3"
+	EditAgeOption      = "4"
+	EditDirectorOption = "5"
+	EditGendersOption  = "6"
+	EditSaveOption     = "sv"
+	EditCancelOption   = "cc"
+	SaveChanges        = true
+	DiscardChanges     = false
+
+	AddGenderOption    = "1"
+	RemoveGenderOption = "2"
+
 	NoAgeFilm = 0
 
 	MinGender       = 1
@@ -48,32 +62,87 @@ func PrintFilm(film entities.Film) {
 
 func FilmPrompt() (entities.Film, []uint) {
 	film := entities.Film{}
-	film.Name = utils.StringPrompt("Informe do nome do filme:")
-	film.Duration = utils.IntPrompt("Informe a duração do filme em minutos:")
-	film.Synopsis = utils.StringPrompt("Informe a sinopse do filme:")
-	film.Age = utils.IntPrompt("Informe a idade indicativa do filme (0 para livre):")
-	film.DirectorID = utils.IntPrompt("Informe o id do diretor do filme:")
-	gendersID := GenderPrompt(true)
+	film.Name = utils.StringPrompt("Nome do filme:")
+	film.Duration = utils.IntPrompt("Duração do filme em minutos:")
+	film.Synopsis = utils.StringPrompt("Sinopse do filme:")
+	film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
+	film.DirectorID = utils.IntPrompt("Id do diretor do filme:")
+	gendersID := GenderPrompt("Informe o id do gênero (0 para voltar):", true)
 
 	return film, gendersID
 }
 
-func FilmEditPrompt(film *entities.Film) {
+func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 	PrintFilm(*film)
-	fmt.Println("Edição de Filme, escolhar um opção:")
-	fmt.Println("[1] Nome")
-	fmt.Println("[2] Duração")
-	fmt.Println("[3] Sinopse")
-	fmt.Println("[4] Classificação indicativa")
-	fmt.Println("[5] Id do diretor")
-	fmt.Println("[6] Gêneros")
-	fmt.Println("[s] Sair")
+
+	var gendersIDToUpdate []uint
+
+	for {
+		fmt.Println("Edição de Filme, escolhar um opção:")
+		fmt.Println("[1] Nome")
+		fmt.Println("[2] Duração")
+		fmt.Println("[3] Sinopse")
+		fmt.Println("[4] Classificação indicativa")
+		fmt.Println("[5] Id do diretor")
+		fmt.Println("[6] Gêneros")
+		fmt.Println("[sv] Salvar")
+		fmt.Println("[cc] Cancelar")
+
+		input := utils.StringPrompt("")
+
+		switch input {
+		case EditNameOption:
+			film.Name = utils.StringPrompt("Nome do filme:")
+
+		case EditDurationOption:
+			film.Duration = utils.IntPrompt("Duração do filme em minutos:")
+
+		case EditSynopsisOption:
+			film.Synopsis = utils.StringPrompt("Sinopse do filme:")
+
+		case EditAgeOption:
+			film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
+
+		case EditDirectorOption:
+			film.DirectorID = utils.IntPrompt("Id do diretor do filme:")
+
+		case EditGendersOption:
+			gendersIDToUpdate = GenderPrompt("Informe o ID do gênero que deseja adicionar ou remover", false)
+
+			for _, genderIDToUpdate := range gendersIDToUpdate {
+				for i, gender := range film.Genders {
+					if genderIDToUpdate == gender.ID {
+						gendersIDToUpdate = append(gendersIDToUpdate[:i], gendersIDToUpdate[i+1:]...)
+						film.Genders = append(film.Genders[:i], film.Genders[i+1:]...)
+					}
+				}
+			}
+
+			// for _, gender := range gendersIDToUpdate {
+			// 	fmt.Printf("ID %v\n", gender)
+			// }
+
+			// for _, gender := range film.Genders {
+			// 	gendercli.PrintGender(gender)
+			// }
+
+		case EditSaveOption:
+			return gendersIDToUpdate, SaveChanges
+
+		case EditCancelOption:
+			return nil, DiscardChanges
+
+		default:
+			fmt.Println("Opção inválida.")
+
+		}
+	}
 }
 
-func GenderPrompt(isCreate bool) []uint {
+func GenderPrompt(label string, isCreate bool) []uint {
 	var gendersID []uint
 	for {
-		gender := utils.IntPrompt("Informe o id do gênero (0 para sair):")
+		gender := utils.IntPrompt(label)
 
 		if gender == GenderExitValue {
 			hasMinGender := len(gendersID) < MinGender

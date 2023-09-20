@@ -69,9 +69,12 @@ func Edit(service *filmserv.Service) {
 		return
 	}
 
-	PrintFilm(*film)
+	gendersID, isSaveChanges := FilmEditPrompt(film)
+	if !isSaveChanges {
+		return
+	}
 
-	updateErr := service.Update(film)
+	updateErr := service.Update(film, gendersID)
 
 	if updateErr != nil {
 		fmt.Printf("%v\n", updateErr)

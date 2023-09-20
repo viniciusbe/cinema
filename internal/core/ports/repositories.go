@@ -22,7 +22,7 @@ type FilmRepository interface {
 	ListAll() ([]entities.Film, error)
 	Find(id string) (*entities.Film, error)
 	Insert(film *entities.Film, gendersID []uint) error
-	Save(film *entities.Film) error
+	Save(film *entities.Film, gendersID []uint) error
 	Delete(id string) error
 }
 

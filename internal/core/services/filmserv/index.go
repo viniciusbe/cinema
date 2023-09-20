@@ -28,8 +28,8 @@ func (s *Service) Get(id string) (*entities.Film, error) {
 	return s.repository.Find(id)
 }
 
-func (s *Service) Update(film *entities.Film) error {
-	return s.repository.Save(film)
+func (s *Service) Update(film *entities.Film, gendersID []uint) error {
+	return s.repository.Save(film, gendersID)
 }
 
 func (s *Service) Create(film *entities.Film, gendersID []uint) error {
