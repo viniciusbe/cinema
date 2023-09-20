@@ -40,14 +40,18 @@ func IntPrompt(label string) uint {
 }
 
 func CrudMenuPrompt(label string) string {
-	fmt.Printf("\n  Menu de %s. Escolha uma opção:\n", label)
-	fmt.Println("    [1] Listar todos")
-	fmt.Println("    [2] Criar")
-	fmt.Println("    [3] Editar")
-	fmt.Println("    [4] Excluir")
-	fmt.Printf("    [5] Voltar\n\n")
+	fmt.Printf("\nMenu de %s. Escolha uma opção:\n", label)
+	fmt.Println("[1] Listar todos")
+	fmt.Println("[2] Criar")
+	fmt.Println("[3] Editar")
+	fmt.Println("[4] Excluir")
+	fmt.Printf("[5] Voltar\n\n")
 
 	input := StringPrompt("")
 
 	return input
+}
+
+func PrintDivider() {
+	fmt.Println("----------------------------------------------------------")
 }

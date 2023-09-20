@@ -33,13 +33,13 @@ func main() {
 out:
 	for {
 		fmt.Printf("\nMenu do Cinema. Escolha uma opção:\n")
-		fmt.Println("  [1] Gêneros")
-		fmt.Println("  [2] Diretores")
-		fmt.Println("  [3] Filmes")
-		fmt.Println("  [4] Sessões")
-		fmt.Println("  [5] Pagantes")
-		fmt.Println("  [6] Ingressos")
-		fmt.Printf("  [s] Sair\n\n")
+		fmt.Println("[1] Gêneros")
+		fmt.Println("[2] Diretores")
+		fmt.Println("[3] Filmes")
+		fmt.Println("[4] Sessões")
+		fmt.Println("[5] Pagantes")
+		fmt.Println("[6] Ingressos")
+		fmt.Printf("[s] Sair\n\n")
 
 		selectedOption := utils.StringPrompt("")
 

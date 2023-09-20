@@ -57,7 +57,7 @@ func PrintFilm(film entities.Film) {
 		fmt.Printf("Classificação indicativa: %v anos\n", film.Age)
 	}
 	fmt.Printf("Diretor: %s\n", film.Director.Name)
-	fmt.Println("----------------------------------------")
+	utils.PrintDivider()
 }
 
 func FilmPrompt() (entities.Film, []uint) {
@@ -104,32 +104,17 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 			film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
 
 		case EditDirectorOption:
-			film.DirectorID = utils.IntPrompt("Id do diretor do filme:")
+			film.DirectorID = utils.IntPrompt("ID do diretor do filme:")
 
 		case EditGendersOption:
-			gendersIDToUpdate = GenderPrompt("Informe o ID do gênero que deseja adicionar ou remover", false)
-
-			for _, genderIDToUpdate := range gendersIDToUpdate {
-				for i, gender := range film.Genders {
-					if genderIDToUpdate == gender.ID {
-						gendersIDToUpdate = append(gendersIDToUpdate[:i], gendersIDToUpdate[i+1:]...)
-						film.Genders = append(film.Genders[:i], film.Genders[i+1:]...)
-					}
-				}
-			}
-
-			// for _, gender := range gendersIDToUpdate {
-			// 	fmt.Printf("ID %v\n", gender)
-			// }
-
-			// for _, gender := range film.Genders {
-			// 	gendercli.PrintGender(gender)
-			// }
+			fmt.Println("Informe os ids dos novos gêneros (todos os gêneros atuais serão sobrescritos):")
+			gendersIDToUpdate = GenderPrompt("ID do gênero (0 para sair):", false)
 
 		case EditSaveOption:
 			return gendersIDToUpdate, SaveChanges
 
 		case EditCancelOption:
+			fmt.Println("Alterações descartadas")
 			return nil, DiscardChanges
 
 		default:

@@ -3,7 +3,6 @@ package filmrepo
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/ports"
-	"cinema/internal/handlers/cli/gendercli"
 	"fmt"
 
 	"gorm.io/gorm"
@@ -60,20 +59,15 @@ func (r *Repository) Save(film *entities.Film, gendersID []uint) error {
 	if len(gendersID) > 0 {
 		r.DB.Find(&newGenders, gendersID)
 	}
-	fmt.Println("---------")
-	for _, gender := range film.Genders {
-		gendercli.PrintGender(gender)
-	}
-	fmt.Println("---------")
-	for _, gender := range gendersID {
-		fmt.Printf("ID %v\n", gender)
-	}
-	newGenders = append(film.Genders, newGenders[:]...)
 
 	err := r.DB.Save(&film).Error
-	r.DB.Model(&film).Association("Genders").Replace(newGenders)
 	if err != nil {
 		return fmt.Errorf("Erro ao atualizar filme -> %w", err)
+	}
+
+	replaceError := r.DB.Model(&film).Association("Genders").Replace(newGenders)
+	if replaceError != nil {
+		return fmt.Errorf("Erro ao atualizar filme -> %w", replaceError)
 	}
 
 	return nil
@@ -87,7 +81,3 @@ func (r *Repository) Delete(id string) error {
 
 	return nil
 }
-
-// func (r *Repository) findGenders() {
-
-// }

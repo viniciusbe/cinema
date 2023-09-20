@@ -17,7 +17,7 @@
 - Filmes
   - [x] Listar
   - [x] Criação
-  - [] Edição
+  - [x] Edição
   - [x] Exclusão
 - Sessões
   - [] Listar

@@ -61,6 +61,7 @@ func Create(service *filmserv.Service) {
 }
 
 func Edit(service *filmserv.Service) {
+	utils.PrintDivider()
 	id := utils.StringPrompt("Digite o id do filme:")
 	film, err := service.Get(id)
 
