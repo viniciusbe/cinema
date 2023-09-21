@@ -20,11 +20,10 @@
   - [x] Edição
   - [x] Exclusão
 - Sessões
-  - [] Listar
-  - [] Detalhes
-  - [] Criação
+  - [x] Listar
+  - [x] Criação
   - [] Edição
-  - [] Exclusão
+  - [x] Exclusão
 - Ingressos
   - [] Listar
   - [] Criação

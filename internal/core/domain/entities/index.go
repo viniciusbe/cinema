@@ -36,6 +36,7 @@ type Session struct {
 	Language string
 	Room     uint
 	FilmID   uint
+	Film     Film
 	Tickets  []Ticket
 }
 
