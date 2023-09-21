@@ -128,17 +128,16 @@ func GenderPrompt(label string, isCreate bool) []uint {
 	var gendersID []uint
 	for {
 		gender := utils.IntPrompt(label)
+		gendersID = append(gendersID, gender)
 
 		if gender == GenderExitValue {
-			hasMinGender := len(gendersID) < MinGender
+			hasNotMinGender := len(gendersID) < MinGender
 
-			if hasMinGender && isCreate {
+			if hasNotMinGender && isCreate {
 				fmt.Println("Informe ao menos um gênero.")
 			} else {
 				break
 			}
-		} else {
-			gendersID = append(gendersID, gender)
 		}
 	}
 
