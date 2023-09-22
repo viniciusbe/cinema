@@ -18,19 +18,21 @@
   - [x] Listar
   - [x] Criação
   - [x] Edição
+    - [] Diretor
   - [x] Exclusão
 - Sessões
   - [x] Listar
   - [x] Criação
   - [x] Edição
+    - [] Filme
   - [x] Exclusão
 - Ingressos
-  - [] Listar
-  - [] Criação
-  - [] Edição
-  - [] Exclusão
+  - [x] Listar
+  - [x] Criação
+  - [x] Edição
+  - [x] Exclusão
 - Compradores
-  - [] Listar
-  - [] Criação
-  - [] Edição
-  - [] Exclusão
+  - [x] Listar
+  - [x] Criação
+  - [x] Edição
+  - [x] Exclusão
