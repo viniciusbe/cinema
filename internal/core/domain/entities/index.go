@@ -53,4 +53,6 @@ type Ticket struct {
 	Modality  string
 	BuyerID   uint
 	SessionID uint
+	Buyer     Buyer
+	Session   Session
 }

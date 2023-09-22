@@ -34,10 +34,6 @@ const (
 	GenderExitValue = 0
 )
 
-func PrintFilmLabel() {
-	fmt.Println("[Id]: Nome | Duração(m) | Sinopse | Idade Class. | Nome Diretor")
-}
-
 func gendersToString(genders []entities.Gender) string {
 	var s []string
 	for _, gender := range genders {

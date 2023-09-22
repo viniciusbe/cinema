@@ -7,6 +7,7 @@ import (
 	"cinema/internal/handlers/cli/filmcli"
 	"cinema/internal/handlers/cli/gendercli"
 	"cinema/internal/handlers/cli/sessioncli"
+	"cinema/internal/handlers/cli/ticketcli"
 	"cinema/internal/handlers/gormdb"
 	"cinema/internal/utils"
 	"fmt"
@@ -57,6 +58,7 @@ out:
 		case BuyersOption:
 			buyercli.Route(db)
 		case TicketsOption:
+			ticketcli.Route(db)
 		case ExitOption:
 			break out
 		default:
