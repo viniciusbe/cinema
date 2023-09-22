@@ -20,7 +20,7 @@ func NewGormRepository(gormdb *gorm.DB) ports.SessionRepository {
 
 func (r *Repository) ListAll() ([]entities.Session, error) {
 	var sessions []entities.Session
-	err := r.DB.Find(&sessions).Error
+	err := r.DB.Preload("Film").Find(&sessions).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao listar sessões -> %w", err)
 	}
@@ -30,7 +30,7 @@ func (r *Repository) ListAll() ([]entities.Session, error) {
 
 func (r *Repository) Find(id string) (*entities.Session, error) {
 	var session *entities.Session
-	err := r.DB.Find(&session, id).Error
+	err := r.DB.Preload("Film").Find(&session, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar sessão -> %w", err)
 	}

@@ -42,15 +42,14 @@ func ListAll(service *sessionserv.Service) {
 		return
 	}
 
-	fmt.Println("Sessões")
+	fmt.Println("Sessões:")
 	for _, session := range sessions {
 		PrintSession(session)
 	}
-	utils.PrintDivider()
 }
 
 func Create(service *sessionserv.Service) {
-	session := SessionPrompt()
+	session := SessionCreationPrompt()
 	err := service.Create(&session)
 
 	if err != nil {
@@ -63,20 +62,23 @@ func Create(service *sessionserv.Service) {
 func Edit(service *sessionserv.Service) {
 	id := utils.StringPrompt("Digite o id do Sessão:")
 	session, err := service.Get(id)
-
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
 	}
 
-	PrintSession(*session)
+	isSaveChanges := SessionEditPrompt(session)
+	if !isSaveChanges {
+		utils.PrintDiscardedChanges()
+		return
+	}
 
 	updateErr := service.Update(session)
-
 	if updateErr != nil {
 		fmt.Printf("%v\n", updateErr)
 		return
 	}
+
 	fmt.Println("Sessão atualizado com sucesso.")
 }
 

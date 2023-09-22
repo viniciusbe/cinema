@@ -22,7 +22,7 @@
 - Sessões
   - [x] Listar
   - [x] Criação
-  - [] Edição
+  - [x] Edição
   - [x] Exclusão
 - Ingressos
   - [] Listar

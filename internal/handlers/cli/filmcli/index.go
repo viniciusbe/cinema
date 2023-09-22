@@ -64,7 +64,6 @@ func Create(service *filmserv.Service) {
 func Edit(service *filmserv.Service) {
 	id := utils.StringPrompt("Digite o id do filme:")
 	film, err := service.Get(id)
-
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
@@ -72,15 +71,16 @@ func Edit(service *filmserv.Service) {
 
 	gendersID, isSaveChanges := FilmEditPrompt(film)
 	if !isSaveChanges {
+		utils.PrintDiscardedChanges()
 		return
 	}
 
 	updateErr := service.Update(film, gendersID)
-
 	if updateErr != nil {
 		fmt.Printf("%v\n", updateErr)
 		return
 	}
+
 	fmt.Println("Filme atualizado com sucesso.")
 }
 

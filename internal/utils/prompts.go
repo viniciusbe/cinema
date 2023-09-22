@@ -55,3 +55,11 @@ func CrudMenuPrompt(label string) string {
 func PrintDivider() {
 	fmt.Println("----------------------------------------------------------")
 }
+
+func PrintDiscardedChanges() {
+	fmt.Println("Alterações dicartadas.")
+}
+
+func PrintInvalidOption() {
+	fmt.Println("Opção inválida.")
+}

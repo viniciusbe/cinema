@@ -20,8 +20,8 @@ const (
 	EditAgeOption      = "4"
 	EditDirectorOption = "5"
 	EditGendersOption  = "6"
-	EditSaveOption     = "sv"
-	EditCancelOption   = "cc"
+	EditSaveOption     = "s"
+	EditCancelOption   = "c"
 	SaveChanges        = true
 	DiscardChanges     = false
 
@@ -78,48 +78,39 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 	var gendersIDToUpdate []uint
 
 	for {
-		fmt.Println("Edição de Filme, escolhar um opção:")
+		fmt.Println("Edição de Filme, escolha uma opção:")
 		fmt.Println("[1] Nome")
 		fmt.Println("[2] Duração")
 		fmt.Println("[3] Sinopse")
 		fmt.Println("[4] Classificação indicativa")
 		fmt.Println("[5] Id do diretor")
 		fmt.Println("[6] Gêneros")
-		fmt.Println("[sv] Salvar")
-		fmt.Println("[cc] Cancelar")
+		fmt.Println("[s] Salvar")
+		fmt.Println("[c] Cancelar")
 
 		input := utils.StringPrompt("")
 
 		switch input {
 		case EditNameOption:
 			film.Name = utils.StringPrompt("Nome do filme:")
-
 		case EditDurationOption:
 			film.Duration = utils.IntPrompt("Duração do filme em minutos:")
-
 		case EditSynopsisOption:
 			film.Synopsis = utils.StringPrompt("Sinopse do filme:")
-
 		case EditAgeOption:
 			film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
-
 		case EditDirectorOption:
 			film.DirectorID = utils.IntPrompt("ID do diretor do filme:")
-
 		case EditGendersOption:
 			fmt.Println("Informe os ids dos novos gêneros (todos os gêneros atuais serão sobrescritos):")
 			gendersIDToUpdate = GenderPrompt("ID do gênero (0 para sair):", false)
-
 		case EditSaveOption:
 			return gendersIDToUpdate, SaveChanges
-
 		case EditCancelOption:
 			fmt.Println("Alterações descartadas")
 			return nil, DiscardChanges
-
 		default:
-			fmt.Println("Opção inválida.")
-
+			utils.PrintInvalidOption()
 		}
 	}
 }
