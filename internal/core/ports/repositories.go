@@ -34,18 +34,18 @@ type SessionRepository interface {
 	Delete(id string) error
 }
 
-type TicketRepository interface {
-	ListAll() ([]entities.Ticket, error)
-	Find(id string) (*entities.Ticket, error)
-	Insert(ticket *entities.Ticket) error
-	Save(ticket *entities.Ticket) error
-	Delete(id string) error
-}
-
 type BuyerRepository interface {
 	ListAll() ([]entities.Buyer, error)
 	Find(id string) (*entities.Buyer, error)
 	Insert(buyer *entities.Buyer) error
 	Save(buyer *entities.Buyer) error
+	Delete(id string) error
+}
+
+type TicketRepository interface {
+	ListAll() ([]entities.Ticket, error)
+	Find(id string) (*entities.Ticket, error)
+	Insert(ticket *entities.Ticket) error
+	Save(ticket *entities.Ticket) error
 	Delete(id string) error
 }

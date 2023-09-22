@@ -40,17 +40,17 @@ type Session struct {
 	Tickets  []Ticket
 }
 
+type Buyer struct {
+	gorm.Model
+	Name     string
+	Document string
+	Tickets  []Ticket
+}
+
 type Ticket struct {
 	gorm.Model
 	Seat      string
 	Modality  string
 	BuyerID   uint
 	SessionID uint
-}
-
-type Buyer struct {
-	gorm.Model
-	Name     string
-	Document string
-	Tickets  []Ticket
 }

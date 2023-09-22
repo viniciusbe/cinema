@@ -2,6 +2,7 @@ package main
 
 import (
 	"cinema/internal/core/domain/entities"
+	"cinema/internal/handlers/cli/buyercli"
 	"cinema/internal/handlers/cli/directorcli"
 	"cinema/internal/handlers/cli/filmcli"
 	"cinema/internal/handlers/cli/gendercli"
@@ -16,8 +17,8 @@ const (
 	DirectorsOption = "2"
 	FilmsOption     = "3"
 	SessionsOption  = "4"
-	TicketsOption   = "5"
-	BuyersOption    = "6"
+	BuyersOption    = "5"
+	TicketsOption   = "6"
 	ExitOption      = "s"
 )
 
@@ -54,11 +55,12 @@ out:
 		case SessionsOption:
 			sessioncli.Route(db)
 		case BuyersOption:
+			buyercli.Route(db)
 		case TicketsOption:
 		case ExitOption:
 			break out
 		default:
-			fmt.Println("Opção inválida.")
+			utils.PrintInvalidOption()
 		}
 	}
 
