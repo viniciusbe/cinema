@@ -47,9 +47,18 @@ func (s *Service) Update(film *entities.Film, gendersID []uint) error {
 }
 
 func (s *Service) Create(film *entities.Film, gendersID []uint) error {
-	genders, _ := s.repository.FindGendersById(gendersID)
+	genders, genderErr := s.repository.FindGendersById(gendersID)
+	if genderErr != nil {
+		return genderErr
+	}
 	film.Genders = genders
 
+	director, err := s.repository.FindDirectorById(film.DirectorID)
+	if err != nil {
+		return err
+	}
+
+	film.Director = *director
 	return s.repository.Insert(film)
 }
 
