@@ -37,7 +37,7 @@ func (s *Service) Update(session *entities.Session) error {
 	}
 	session.Film = *film
 
-	isTimeClash := s.ValidTime(session)
+	isTimeClash := s.ValidateTime(session)
 	if isTimeClash {
 		return errors.New("Já existe uma sessão nesse horário e sala")
 	}
@@ -51,7 +51,7 @@ func (s *Service) Create(session *entities.Session) error {
 	}
 	session.Film = *film
 
-	isTimeClash := s.ValidTime(session)
+	isTimeClash := s.ValidateTime(session)
 	if isTimeClash {
 		return errors.New("Erro ao criar sessão -> choque de horários.")
 	}
@@ -62,7 +62,7 @@ func (s *Service) Delete(id string) error {
 	return s.repository.Delete(id)
 }
 
-func (s *Service) ValidTime(session *entities.Session) bool {
+func (s *Service) ValidateTime(session *entities.Session) bool {
 	isPreviousTimeClash := false
 
 	previousSession := s.repository.FindFirstBeforeTime(session.Room, session.Time)

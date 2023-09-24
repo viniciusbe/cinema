@@ -4,6 +4,7 @@ import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/utils"
 	"fmt"
+	"regexp"
 )
 
 const (
@@ -33,7 +34,7 @@ func PrintTicket(ticket entities.Ticket) {
 
 func TicketCreationPrompt() entities.Ticket {
 	ticket := entities.Ticket{}
-	ticket.Seat = utils.StringPrompt("Assento do ingresso:")
+	ticket.Seat = SeatPrompt()
 	ticket.Modality = ModalityPrompt()
 	ticket.BuyerID = utils.IntPrompt("Id do pagante:")
 	ticket.SessionID = utils.IntPrompt("Id da sessão:")
@@ -56,7 +57,7 @@ func TicketEditPrompt(ticket *entities.Ticket) bool {
 
 		switch input {
 		case EditSeatOption:
-			ticket.Seat = utils.StringPrompt("Assento do ingresso:")
+			ticket.Seat = SeatPrompt()
 		case EditModalityOption:
 			ticket.Modality = ModalityPrompt()
 		case EditBuyerIdOption:
@@ -79,5 +80,18 @@ func ModalityPrompt() string {
 		return "Meia"
 	} else {
 		return "Inteira"
+	}
+}
+
+func SeatPrompt() string {
+	for {
+		seat := utils.StringPrompt("Assento do ingresso (Ex: A16):")
+		match, err := regexp.MatchString("^[A-P]([1-9]|1[0-8])$", seat)
+
+		if match && err == nil {
+			return seat
+		} else {
+			fmt.Println("Assento inválido, fileiras devem ser de A-P e cadeiras de 1-18.")
+		}
 	}
 }

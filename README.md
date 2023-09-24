@@ -33,7 +33,8 @@
 - Ingressos
   - [x] Listar
   - [x] Criação
-    - [ ] Validações assento
+    - [x] Validações assento
+    - [x] Validação Pagante
   - [x] Edição
   - [x] Exclusão
 - Compradores

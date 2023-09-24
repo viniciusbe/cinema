@@ -56,4 +56,7 @@ type TicketRepository interface {
 	Insert(ticket *entities.Ticket) error
 	Save(ticket *entities.Ticket) error
 	Delete(id string) error
+	FindBuyerById(id uint) (*entities.Buyer, error)
+	FindSessionById(id uint) (*entities.Session, error)
+	FindBySessionIdAndSeat(sessionId uint, seat string) bool
 }

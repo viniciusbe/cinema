@@ -30,7 +30,7 @@ func (r *Repository) ListAll() ([]entities.Ticket, error) {
 
 func (r *Repository) Find(id string) (*entities.Ticket, error) {
 	var ticket *entities.Ticket
-	err := r.DB.Preload("Buyer").Preload("Session").Find(&ticket, id).Error
+	err := r.DB.Preload("Buyer").Preload("Session").First(&ticket, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar ingresso -> %w", err)
 	}
@@ -77,4 +77,30 @@ func (r *Repository) Delete(id string) error {
 	}
 
 	return nil
+}
+
+func (r *Repository) FindBuyerById(id uint) (*entities.Buyer, error) {
+	var buyer *entities.Buyer
+	buyerErr := r.DB.First(&buyer, id).Error
+	if buyerErr != nil {
+		return nil, fmt.Errorf("Erro ao buscar pagante -> %w", buyerErr)
+	}
+
+	return buyer, nil
+}
+
+func (r *Repository) FindSessionById(id uint) (*entities.Session, error) {
+	var session *entities.Session
+	sessionErr := r.DB.First(&session, id).Error
+	if sessionErr != nil {
+		return nil, fmt.Errorf("Erro ao buscar sessão -> %w", sessionErr)
+	}
+
+	return session, nil
+}
+
+func (r *Repository) FindBySessionIdAndSeat(sessionId uint, seat string) bool {
+	rowsAffected := r.DB.Where("session_id = ? AND seat = ?", sessionId, seat).First(&entities.Ticket{}).RowsAffected
+
+	return rowsAffected != 0
 }
