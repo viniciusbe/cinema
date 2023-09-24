@@ -13,9 +13,9 @@ func Route(db *gorm.DB) {
 	repo := filmrepo.NewGormRepository(db)
 	serv := filmserv.New(repo)
 
+	utils.PrintDivider()
 out:
 	for {
-		utils.PrintDivider()
 		selectedOption := utils.CrudMenuPrompt("Filmes")
 
 		switch selectedOption {
@@ -30,7 +30,7 @@ out:
 		case BackOption:
 			break out
 		default:
-			fmt.Println("Opção inválida.")
+			utils.PrintInvalidOption()
 		}
 	}
 }

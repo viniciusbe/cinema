@@ -63,7 +63,7 @@ func FilmPrompt() (entities.Film, []uint) {
 	film.Synopsis = utils.StringPrompt("Sinopse do filme:")
 	film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
 	film.DirectorID = utils.IntPrompt("Id do diretor do filme:")
-	gendersID := GenderPrompt("Informe o id do gênero (0 para voltar):", true)
+	gendersID := GenderPrompt()
 
 	return film, gendersID
 }
@@ -79,7 +79,7 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 		fmt.Println("[2] Duração")
 		fmt.Println("[3] Sinopse")
 		fmt.Println("[4] Classificação indicativa")
-		fmt.Println("[5] Id do diretor")
+		fmt.Println("[5] Diretor")
 		fmt.Println("[6] Gêneros")
 		fmt.Println("[s] Salvar")
 		fmt.Println("[c] Cancelar")
@@ -99,7 +99,7 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 			film.DirectorID = utils.IntPrompt("ID do diretor do filme:")
 		case EditGendersOption:
 			fmt.Println("Informe os ids dos novos gêneros (todos os gêneros atuais serão sobrescritos):")
-			gendersIDToUpdate = GenderPrompt("ID do gênero (0 para sair):", false)
+			gendersIDToUpdate = GenderPrompt()
 		case EditSaveOption:
 			return gendersIDToUpdate, SaveChanges
 		case EditCancelOption:
@@ -111,22 +111,22 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 	}
 }
 
-func GenderPrompt(label string, isCreate bool) []uint {
+func GenderPrompt() []uint {
 	var gendersID []uint
 	for {
-		gender := utils.IntPrompt(label)
-		gendersID = append(gendersID, gender)
+		gender := utils.IntPrompt("Id do gênero (0 para finalizar):")
 
 		if gender == GenderExitValue {
 			hasNotMinGender := len(gendersID) < MinGender
 
-			if hasNotMinGender && isCreate {
+			if hasNotMinGender {
 				fmt.Println("Informe ao menos um gênero.")
 			} else {
-				break
+				return gendersID
 			}
+		} else {
+			gendersID = append(gendersID, gender)
 		}
 	}
 
-	return gendersID
 }

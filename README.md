@@ -18,17 +18,20 @@
   - [x] Listar
   - [x] Criação
   - [x] Edição
-    - [] Diretor
+    - [x] Diretor
   - [x] Exclusão
 - Sessões
   - [x] Listar
   - [x] Criação
+    - [] Validações sala
+    - [] Validações choque de horario
   - [x] Edição
     - [] Filme
   - [x] Exclusão
 - Ingressos
   - [x] Listar
   - [x] Criação
+    - [] Validações assento
   - [x] Edição
   - [x] Exclusão
 - Compradores

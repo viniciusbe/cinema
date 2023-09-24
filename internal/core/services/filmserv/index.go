@@ -29,11 +29,28 @@ func (s *Service) Get(id string) (*entities.Film, error) {
 }
 
 func (s *Service) Update(film *entities.Film, gendersID []uint) error {
-	return s.repository.Save(film, gendersID)
+	if len(gendersID) > 0 {
+		genders, err := s.repository.FindGendersById(gendersID)
+		film.Genders = genders
+		if err != nil {
+			return err
+		}
+	}
+
+	director, err := s.repository.FindDirectorById(film.DirectorID)
+	if err != nil {
+		return err
+	}
+
+	film.Director = *director
+	return s.repository.Save(film)
 }
 
 func (s *Service) Create(film *entities.Film, gendersID []uint) error {
-	return s.repository.Insert(film, gendersID)
+	genders, _ := s.repository.FindGendersById(gendersID)
+	film.Genders = genders
+
+	return s.repository.Insert(film)
 }
 
 func (s *Service) Delete(id string) error {

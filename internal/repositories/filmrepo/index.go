@@ -30,7 +30,7 @@ func (r *Repository) ListAll() ([]entities.Film, error) {
 
 func (r *Repository) Find(id string) (*entities.Film, error) {
 	var film *entities.Film
-	err := r.DB.Preload("Genders").Preload("Director").Find(&film, id).Error
+	err := r.DB.Preload("Genders").Preload("Director").First(&film, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar filme -> %w", err)
 	}
@@ -38,14 +38,7 @@ func (r *Repository) Find(id string) (*entities.Film, error) {
 	return film, nil
 }
 
-func (r *Repository) Insert(film *entities.Film, gendersID []uint) error {
-	var genders []entities.Gender
-	genderErr := r.DB.Find(&genders, gendersID).Error
-	if genderErr != nil {
-		return fmt.Errorf("Erro ao buscar genero(s) -> %w", genderErr)
-	}
-
-	film.Genders = genders
+func (r *Repository) Insert(film *entities.Film) error {
 	err := r.DB.Save(&film).Error
 	if err != nil {
 		return fmt.Errorf("Erro ao inserir filme -> %w", err)
@@ -54,16 +47,8 @@ func (r *Repository) Insert(film *entities.Film, gendersID []uint) error {
 	return nil
 }
 
-func (r *Repository) Save(film *entities.Film, gendersID []uint) error {
-	if len(gendersID) > 0 {
-		var newGenders []entities.Gender
-		r.DB.Find(&newGenders, gendersID)
-		replaceError := r.DB.Model(&film).Association("Genders").Replace(newGenders)
-		if replaceError != nil {
-			return fmt.Errorf("Erro ao atualizar gêneros do filme -> %w", replaceError)
-		}
-	}
-
+func (r *Repository) Save(film *entities.Film) error {
+	r.DB.Model(&film).Association("Genders").Replace(film.Genders)
 	err := r.DB.Save(&film).Error
 	if err != nil {
 		return fmt.Errorf("Erro ao atualizar filme -> %w", err)
@@ -79,4 +64,24 @@ func (r *Repository) Delete(id string) error {
 	}
 
 	return nil
+}
+
+func (r *Repository) FindGendersById(ids []uint) ([]entities.Gender, error) {
+	var genders []entities.Gender
+	genderErr := r.DB.Find(&genders, ids).Error
+	if genderErr != nil {
+		return nil, fmt.Errorf("Erro ao buscar genero(s) -> %w", genderErr)
+	}
+
+	return genders, nil
+}
+
+func (r *Repository) FindDirectorById(id uint) (*entities.Director, error) {
+	var director *entities.Director
+	err := r.DB.First(&director, id).Error
+	if err != nil {
+		return nil, fmt.Errorf("Erro ao buscar diretor -> %w", err)
+	}
+
+	return director, nil
 }
