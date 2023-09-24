@@ -78,7 +78,17 @@ func (r *Repository) FindFilmById(id uint) (*entities.Film, error) {
 
 func (r *Repository) FindByRoomAndTime(room uint, startTime time.Time, endTime time.Time) bool {
 	var session *entities.Session
-	rowsAffected := r.DB.Where("room = ? AND time BETWEEN ? AND ?", startTime, endTime).First(&session).RowsAffected
+	rowsAffected := r.DB.Where("room = ? AND time BETWEEN ? AND ?", room, startTime, endTime).First(&session).RowsAffected
 
 	return rowsAffected != 0
+}
+
+func (r *Repository) FindFirstBeforeTime(room uint, startTime time.Time) *entities.Session {
+	var session *entities.Session
+	err := r.DB.Order("time DESC").Where("room = ? AND time < ?", room, startTime).Preload("Film").First(&session).Error
+	if err != nil {
+		return nil
+	}
+
+	return session
 }

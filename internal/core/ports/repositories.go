@@ -39,6 +39,7 @@ type SessionRepository interface {
 	Delete(id string) error
 	FindFilmById(id uint) (*entities.Film, error)
 	FindByRoomAndTime(room uint, startTime time.Time, endTime time.Time) bool
+	FindFirstBeforeTime(room uint, startTime time.Time) *entities.Session
 }
 
 type BuyerRepository interface {
