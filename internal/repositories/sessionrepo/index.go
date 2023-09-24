@@ -4,6 +4,7 @@ import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/ports"
 	"fmt"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -30,7 +31,7 @@ func (r *Repository) ListAll() ([]entities.Session, error) {
 
 func (r *Repository) Find(id string) (*entities.Session, error) {
 	var session *entities.Session
-	err := r.DB.Preload("Film").Find(&session, id).Error
+	err := r.DB.Preload("Film").First(&session, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar sessão -> %w", err)
 	}
@@ -63,4 +64,21 @@ func (r *Repository) Delete(id string) error {
 	}
 
 	return nil
+}
+
+func (r *Repository) FindFilmById(id uint) (*entities.Film, error) {
+	var film *entities.Film
+	err := r.DB.First(&film, id).Error
+	if err != nil {
+		return nil, fmt.Errorf("Erro ao encontrar filme -> %w", err)
+	}
+
+	return film, nil
+}
+
+func (r *Repository) FindByRoomAndTime(room uint, startTime time.Time, endTime time.Time) bool {
+	var session *entities.Session
+	rowsAffected := r.DB.Where("room = ? AND time BETWEEN ? AND ?", startTime, endTime).First(&session).RowsAffected
+
+	return rowsAffected != 0
 }

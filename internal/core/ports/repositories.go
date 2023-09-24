@@ -1,6 +1,9 @@
 package ports
 
-import "cinema/internal/core/domain/entities"
+import (
+	"cinema/internal/core/domain/entities"
+	"time"
+)
 
 type GenderRepository interface {
 	ListAll() ([]entities.Gender, error)
@@ -34,6 +37,8 @@ type SessionRepository interface {
 	Insert(session *entities.Session) error
 	Save(session *entities.Session) error
 	Delete(id string) error
+	FindFilmById(id uint) (*entities.Film, error)
+	FindByRoomAndTime(room uint, startTime time.Time, endTime time.Time) bool
 }
 
 type BuyerRepository interface {

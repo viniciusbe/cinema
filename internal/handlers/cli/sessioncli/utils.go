@@ -24,6 +24,9 @@ const (
 	EditCancelOption   = "c"
 	SaveChanges        = true
 	DiscardChanges     = false
+
+	MinValidRoom = 1
+	MaxVadidRoom = 7
 )
 
 func PrintSession(session entities.Session) {
@@ -38,7 +41,7 @@ func SessionCreationPrompt() entities.Session {
 	session := entities.Session{}
 	session.FilmID = utils.IntPrompt("Id do filme:")
 	session.Language = LanguagePrompt()
-	session.Room = utils.IntPrompt("Número da sala que irá passar:")
+	session.Room = RoomPrompt()
 	session.Time = TimePrompt()
 
 	return session
@@ -63,7 +66,7 @@ func SessionEditPrompt(session *entities.Session) bool {
 		case EditLanguageOption:
 			session.Language = LanguagePrompt()
 		case EditRoomOption:
-			session.Room = utils.IntPrompt("Número da sala que irá passar:")
+			session.Room = RoomPrompt()
 		case EditTimeOption:
 			session.Time = TimePrompt()
 		case EditSaveOption:
@@ -90,4 +93,17 @@ func LanguagePrompt() string {
 	} else {
 		return "Legendado"
 	}
+}
+
+func RoomPrompt() uint {
+	for {
+		fmt.Printf("Número da sala (de %v a %v):\n", MinValidRoom, MaxVadidRoom)
+		room := utils.IntPrompt("")
+		if room < MinValidRoom || room > MaxVadidRoom {
+			fmt.Println("Sala não existe.")
+		} else {
+			return room
+		}
+	}
+
 }

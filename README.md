@@ -17,21 +17,23 @@
 - Filmes
   - [x] Listar
   - [x] Criação
+    - [x] Diretor
   - [x] Edição
     - [x] Diretor
   - [x] Exclusão
 - Sessões
   - [x] Listar
   - [x] Criação
-    - [] Validações sala
-    - [] Validações choque de horario
+    - [x] Validações sala
+    - [ ] Validações choque de horario
+    - [ ] Validação data e hora
   - [x] Edição
-    - [] Filme
+    - [x] Filme
   - [x] Exclusão
 - Ingressos
   - [x] Listar
   - [x] Criação
-    - [] Validações assento
+    - [ ] Validações assento
   - [x] Edição
   - [x] Exclusão
 - Compradores
