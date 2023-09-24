@@ -25,8 +25,8 @@
   - [x] Listar
   - [x] Criação
     - [x] Validações sala
-    - [ ] Validações choque de horario
-    - [ ] Validação data e hora
+    - [x] Validações choque de horario
+    - [x] Validação data e hora
   - [x] Edição
     - [x] Filme
   - [x] Exclusão

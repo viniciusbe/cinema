@@ -32,7 +32,7 @@ const (
 func PrintSession(session entities.Session) {
 	fmt.Printf("ID: %v | %s | %s\n", session.ID, session.Film.Name, session.Language)
 	fmt.Printf("Sala: %v\n", session.Room)
-	fmt.Printf("Data e hora: %s\n", session.Time.Local().Format(timeLayout))
+	fmt.Printf("Data e hora: %s\n", FormatTime(session.Time))
 
 	utils.PrintDivider()
 }
@@ -81,9 +81,21 @@ func SessionEditPrompt(session *entities.Session) bool {
 
 func TimePrompt() time.Time {
 	loc, _ := time.LoadLocation("America/Sao_Paulo")
-	value := utils.StringPrompt("Data e hora (21/09/23 15:45):")
-	tm, _ := time.ParseInLocation(timeLayout, value, loc)
-	return tm
+	for {
+		fmt.Printf("Informe a data e hora (Ex: %s):\n", FormatTime(time.Now()))
+		value := utils.StringPrompt("")
+		tm, err := time.ParseInLocation(timeLayout, value, loc)
+
+		startTime := time.Now()
+		endTime := time.Now().AddDate(0, 1, 0)
+		isValidDate := tm.After(startTime) && tm.Before(endTime)
+
+		if err == nil && isValidDate {
+			return tm
+		} else {
+			fmt.Printf("Data inválida. A data deve ser entre %s e %s.\n", FormatTime(startTime), FormatTime(endTime))
+		}
+	}
 }
 
 func LanguagePrompt() string {
@@ -106,4 +118,8 @@ func RoomPrompt() uint {
 		}
 	}
 
+}
+
+func FormatTime(time time.Time) string {
+	return time.Local().Format(timeLayout)
 }
