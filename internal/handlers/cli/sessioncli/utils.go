@@ -14,6 +14,10 @@ const (
 	DeleteOption  = "4"
 	BackOption    = "5"
 
+	ListByFilmOption   = "2"
+	ListByBuyerOption  = "3"
+	ListByGenderOption = "4"
+
 	timeLayout = "02/01/06 15:04"
 
 	EditFilmIdOption   = "1"
@@ -28,6 +32,18 @@ const (
 	MinValidRoom = 1
 	MaxVadidRoom = 7
 )
+
+func SessionListingPrompt() string {
+	fmt.Println("[1] Listar todos")
+	fmt.Println("[2] Listar por filme")
+	fmt.Println("[3] Listar por pagante")
+	fmt.Println("[4] Listar por gênero")
+	fmt.Printf("[5] Voltar\n\n")
+
+	input := utils.StringPrompt("")
+
+	return input
+}
 
 func PrintSession(session entities.Session) {
 	fmt.Printf("ID: %v | %s | %s\n", session.ID, session.Film.Name, session.Language)

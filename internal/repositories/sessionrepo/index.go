@@ -92,3 +92,13 @@ func (r *Repository) FindFirstBeforeTime(room uint, startTime time.Time) *entiti
 
 	return session
 }
+
+func (r *Repository) FindByFilmId(id string) ([]entities.Session, error) {
+	var sessions []entities.Session
+	err := r.DB.Where("film_id = ?", id).Preload("Film").Find(&sessions).Error
+	if err != nil {
+		return nil, fmt.Errorf("Erro ao listar sessões -> %w", err)
+	}
+
+	return sessions, nil
+}

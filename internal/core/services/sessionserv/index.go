@@ -76,3 +76,30 @@ func (s *Service) ValidateTime(session *entities.Session) bool {
 
 	return isPreviousTimeClash || isNextTimeClash
 }
+
+func (s *Service) GetByFilmId(id string) ([]entities.Session, error) {
+	sessions, err := s.repository.FindByFilmId(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return sessions, nil
+}
+
+func (s *Service) GetByBuyerId(id string) ([]entities.Session, error) {
+	sessions, err := s.repository.FindByFilmId(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return sessions, nil
+}
+
+func (s *Service) GetByGenderId(id string) ([]entities.Session, error) {
+	sessions, err := s.repository.FindByFilmId(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return sessions, nil
+}

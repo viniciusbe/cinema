@@ -40,6 +40,10 @@ type SessionRepository interface {
 	FindFilmById(id uint) (*entities.Film, error)
 	FindByRoomAndTime(room uint, startTime time.Time, endTime time.Time) bool
 	FindFirstBeforeTime(room uint, startTime time.Time) *entities.Session
+	FindByFilmId(id string) ([]entities.Session, error)
+	// FindByBuyerId(id uint) ([]entities.Session, error)
+	// FindByGenderId(id uint) ([]entities.Session, error)
+	// FindByDirectorId(id uint) ([]entities.Session, error)
 }
 
 type BuyerRepository interface {

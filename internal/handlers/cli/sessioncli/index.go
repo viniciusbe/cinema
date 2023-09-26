@@ -1,6 +1,7 @@
 package sessioncli
 
 import (
+	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/services/sessionserv"
 	"cinema/internal/repositories/sessionrepo"
 	"cinema/internal/utils"
@@ -35,7 +36,35 @@ out:
 }
 
 func ListAll(service *sessionserv.Service) {
-	sessions, err := service.ListAll()
+	var sessions []entities.Session
+	var err error
+
+out:
+	for {
+		selectedOption := SessionListingPrompt()
+
+		switch selectedOption {
+		case ListAllOption:
+			sessions, err = service.ListAll()
+			break out
+		case ListByFilmOption:
+			id := utils.StringPrompt("Digite o id do Filme:")
+			sessions, err = service.GetByFilmId(id)
+			break out
+		case ListByBuyerOption:
+			id := utils.StringPrompt("Digite o id do Pagante:")
+			sessions, err = service.GetByBuyerId(id)
+			break out
+		case ListByGenderOption:
+			id := utils.StringPrompt("Digite o id do Gênero:")
+			sessions, err = service.GetByGenderId(id)
+			break out
+		case BackOption:
+			return
+		default:
+			utils.PrintInvalidOption()
+		}
+	}
 
 	if err != nil {
 		fmt.Printf("%v\n", err)
