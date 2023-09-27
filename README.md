@@ -46,3 +46,5 @@
   - [ ] Próximas sessões de um filme
   - [ ] Sessões que um pagante tem ingresso
   - [ ] Próximas sessões com filmes de um gênero
+- [ ] Criar registros no banco
+- [ ] Fazer documentação
