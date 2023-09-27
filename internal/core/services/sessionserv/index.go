@@ -87,7 +87,7 @@ func (s *Service) GetByFilmId(id string) ([]entities.Session, error) {
 }
 
 func (s *Service) GetByBuyerId(id string) ([]entities.Session, error) {
-	sessions, err := s.repository.FindByFilmId(id)
+	sessions, err := s.repository.FindByBuyerId(id)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (s *Service) GetByBuyerId(id string) ([]entities.Session, error) {
 }
 
 func (s *Service) GetByGenderId(id string) ([]entities.Session, error) {
-	sessions, err := s.repository.FindByFilmId(id)
+	sessions, err := s.repository.FindByGenderId(id)
 	if err != nil {
 		return nil, err
 	}

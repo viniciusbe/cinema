@@ -105,7 +105,29 @@ func (r *Repository) FindByFilmId(id string) ([]entities.Session, error) {
 
 func (r *Repository) FindByBuyerId(id string) ([]entities.Session, error) {
 	var sessions []entities.Session
-	err := r.DB.Model(&entities.Ticket{}).Where("buyer_id = ?", id).Association("Session").Find(&sessions)
+
+	err := r.DB.Raw("SELECT DISTINCT s.*, f.name as \"Film__name\" "+
+		"FROM sessions s "+
+		"INNER JOIN tickets t ON s.id = t.session_id AND t.buyer_id = ? "+
+		"INNER JOIN films f ON s.film_id = f.id "+
+		"WHERE s.deleted_at IS null;", id).Scan((&sessions)).Error
+
+	if err != nil {
+		return nil, fmt.Errorf("Erro ao listar sessões -> %w", err)
+	}
+
+	return sessions, nil
+}
+
+func (r *Repository) FindByGenderId(id string) ([]entities.Session, error) {
+	var sessions []entities.Session
+
+	err := r.DB.Raw("SELECT DISTINCT s.*, f.name as \"Film__name\" "+
+		"FROM sessions s "+
+		"INNER JOIN films f ON s.film_id = f.id "+
+		"INNER JOIN film_genders fg ON f.id = fg.film_id AND fg.gender_id = ? "+
+		"WHERE s.deleted_at IS null;", id).Scan((&sessions)).Error
+
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao listar sessões -> %w", err)
 	}

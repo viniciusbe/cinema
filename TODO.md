@@ -1,0 +1,49 @@
+## TODO
+
+- [x] Banco
+- [x] CLI
+- [x] Fazer documentação
+- [ ] Criar registros
+- [ ] Gerar arquivo de backup
+- Genero
+  - [x] Listar
+  - [x] Criação
+  - [x] Edição
+  - [x] Exclusão
+- Diretor
+  - [x] Listar
+  - [x] Criação
+  - [x] Edição
+  - [x] Exclusão
+- Filmes
+  - [x] Listar
+  - [x] Criação
+    - [x] Diretor
+  - [x] Edição
+    - [x] Diretor
+  - [x] Exclusão
+- Sessões
+  - [x] Listar
+  - [x] Criação
+    - [x] Validações sala
+    - [x] Validações choque de horario
+    - [x] Validação data e hora
+  - [x] Edição
+    - [x] Filme
+  - [x] Exclusão
+- Ingressos
+  - [x] Listar
+  - [x] Criação
+    - [x] Validações assento
+    - [x] Validação Pagante
+  - [x] Edição
+  - [x] Exclusão
+- Compradores
+  - [x] Listar
+  - [x] Criação
+  - [x] Edição
+  - [x] Exclusão
+- Relatórios
+  - [x] Próximas sessões de um filme
+  - [x] Sessões que um pagante tem ingresso
+  - [x] Próximas sessões com filmes de um gênero
