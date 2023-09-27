@@ -102,3 +102,13 @@ func (r *Repository) FindByFilmId(id string) ([]entities.Session, error) {
 
 	return sessions, nil
 }
+
+func (r *Repository) FindByBuyerId(id string) ([]entities.Session, error) {
+	var sessions []entities.Session
+	err := r.DB.Model(&entities.Ticket{}).Where("buyer_id = ?", id).Association("Session").Find(&sessions)
+	if err != nil {
+		return nil, fmt.Errorf("Erro ao listar sessões -> %w", err)
+	}
+
+	return sessions, nil
+}
