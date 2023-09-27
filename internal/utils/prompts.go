@@ -48,7 +48,7 @@ func CrudMenuPrompt(label string) string {
 	fmt.Printf("[5] Voltar\n\n")
 
 	input := StringPrompt("")
-
+	PrintDivider()
 	return input
 }
 

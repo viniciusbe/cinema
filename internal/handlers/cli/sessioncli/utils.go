@@ -34,10 +34,11 @@ const (
 )
 
 func SessionListingPrompt() string {
-	fmt.Println("[1] Listar todos")
-	fmt.Println("[2] Listar por filme")
-	fmt.Println("[3] Listar por pagante")
-	fmt.Println("[4] Listar por gênero")
+	fmt.Println("Menu de listagem, escolha uma opção:")
+	fmt.Println("[1] Todos")
+	fmt.Println("[2] Por filme")
+	fmt.Println("[3] Por pagante")
+	fmt.Println("[4] Por gênero")
 	fmt.Printf("[5] Voltar\n\n")
 
 	input := utils.StringPrompt("")

@@ -44,6 +44,7 @@ func ListAll(service *genderserv.Service) {
 		return
 	}
 
+	fmt.Println("Gêneros:")
 	fmt.Println("[id]: Descrição")
 	for _, gender := range genders {
 		PrintGender(gender)

@@ -45,6 +45,7 @@ out:
 		fmt.Printf("[s] Sair\n\n")
 
 		selectedOption := utils.StringPrompt("")
+		utils.PrintDivider()
 
 		switch selectedOption {
 		case GendersOption:

@@ -43,6 +43,7 @@ func ListAll(service *directorserv.Service) {
 		return
 	}
 
+	fmt.Println("Diretores:")
 	fmt.Println("[id]: Nome")
 	for _, director := range directors {
 		PrintDirector(director)

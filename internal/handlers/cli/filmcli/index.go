@@ -13,7 +13,6 @@ func Route(db *gorm.DB) {
 	repo := filmrepo.NewGormRepository(db)
 	serv := filmserv.New(repo)
 
-	utils.PrintDivider()
 out:
 	for {
 		selectedOption := utils.CrudMenuPrompt("Filmes")

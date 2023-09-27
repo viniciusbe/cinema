@@ -44,6 +44,7 @@ func ListAll(service *buyerserv.Service) {
 		return
 	}
 
+	fmt.Println("Pagantes:")
 	PrintBuyerLabel()
 	for _, buyer := range buyers {
 		PrintBuyer(buyer)

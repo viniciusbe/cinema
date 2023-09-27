@@ -71,9 +71,13 @@ out:
 		return
 	}
 
-	fmt.Println("Sessões:")
-	for _, session := range sessions {
-		PrintSession(session)
+	if len(sessions) > 0 {
+		fmt.Println("Sessões:")
+		for _, session := range sessions {
+			PrintSession(session)
+		}
+	} else {
+		fmt.Println("Nenhum dado encontrado.")
 	}
 }
 
