@@ -1,6 +1,6 @@
-# Guia de Compilação e Execução da Aplicação em Go com PostgreSQL 15
+# Guia de Compilação e Execução da Aplicação
 
-Este guia passo a passo irá ajudá-lo a compilar e executar a aplicação em Go que utiliza o banco de dados PostgreSQL 15. Siga as etapas abaixo:
+Este guia passo a passo irá ajudá-lo a compilar e executar a aplicação. Siga as etapas abaixo:
 
 ## 1. Pré-requisitos
 
