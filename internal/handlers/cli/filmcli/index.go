@@ -42,9 +42,13 @@ func ListAll(service *filmserv.Service) {
 		return
 	}
 
-	fmt.Println("Filmes:")
-	for _, film := range films {
-		PrintFilm(film)
+	if len(films) > 0 {
+		fmt.Println("Filmes:")
+		for _, film := range films {
+			PrintFilm(film)
+		}
+	} else {
+		fmt.Println("Nenhum dado encontrado.")
 	}
 }
 
@@ -85,8 +89,20 @@ func Edit(service *filmserv.Service) {
 
 func Delete(service *filmserv.Service) {
 	id := utils.StringPrompt("Digite o id do filme:")
-	err := service.Delete(id)
+	film, err := service.Get(id)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
 
+	PrintFilm(*film)
+	confirmDeletion := utils.ConfirmDeletePrompt()
+	if !confirmDeletion {
+		fmt.Println("Exclusão cancelada.")
+		return
+	}
+
+	err = service.Delete(id)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return

@@ -42,7 +42,7 @@ func SessionListingPrompt() string {
 	fmt.Printf("[5] Voltar\n\n")
 
 	input := utils.StringPrompt("")
-
+	utils.PrintDivider()
 	return input
 }
 

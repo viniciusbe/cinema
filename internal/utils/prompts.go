@@ -52,12 +52,32 @@ func CrudMenuPrompt(label string) string {
 	return input
 }
 
+const (
+	ConfirmOption = "s"
+	CancelOption  = "n"
+)
+
+func ConfirmDeletePrompt() bool {
+	for {
+		input := StringPrompt("Confirmar exclusão? (s)im/(n)ão")
+
+		switch input {
+		case ConfirmOption:
+			return true
+		case CancelOption:
+			return false
+		default:
+			PrintInvalidOption()
+		}
+	}
+}
+
 func PrintDivider() {
 	fmt.Println("----------------------------------------------------------")
 }
 
 func PrintDiscardedChanges() {
-	fmt.Println("Alterações dicartadas.")
+	fmt.Println("Alterações descartadas.")
 }
 
 func PrintInvalidOption() {

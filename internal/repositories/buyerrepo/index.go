@@ -30,7 +30,7 @@ func (r *Repository) ListAll() ([]entities.Buyer, error) {
 
 func (r *Repository) Find(id string) (*entities.Buyer, error) {
 	var buyer *entities.Buyer
-	err := r.DB.Find(&buyer, id).Error
+	err := r.DB.First(&buyer, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar pagante -> %w", err)
 	}

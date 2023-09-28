@@ -43,10 +43,14 @@ func ListAll(service *directorserv.Service) {
 		return
 	}
 
-	fmt.Println("Diretores:")
-	fmt.Println("[id]: Nome")
-	for _, director := range directors {
-		PrintDirector(director)
+	if len(directors) > 0 {
+		fmt.Println("Diretores:")
+		fmt.Println("[id]: Nome")
+		for _, director := range directors {
+			PrintDirector(director)
+		}
+	} else {
+		fmt.Println("Nenhum dado encontrado.")
 	}
 }
 
@@ -87,8 +91,22 @@ func Edit(service *directorserv.Service) {
 
 func Delete(service *directorserv.Service) {
 	id := utils.StringPrompt("Digite o id do Diretor:")
-	err := service.Delete(id)
+	director, err := service.Get(id)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
 
+	fmt.Println("[id]: Nome")
+	PrintDirector(*director)
+
+	confirmDeletion := utils.ConfirmDeletePrompt()
+	if !confirmDeletion {
+		fmt.Println("Exclusão cancelada.")
+		return
+	}
+
+	err = service.Delete(id)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return

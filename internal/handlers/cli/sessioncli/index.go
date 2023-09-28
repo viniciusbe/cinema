@@ -89,11 +89,11 @@ func Create(service *sessionserv.Service) {
 		fmt.Printf("%v\n", err)
 		return
 	}
-	fmt.Println("Sessão criado com sucesso.")
+	fmt.Println("Sessão criada com sucesso.")
 }
 
 func Edit(service *sessionserv.Service) {
-	id := utils.StringPrompt("Digite o id do Sessão:")
+	id := utils.StringPrompt("Digite o id da Sessão:")
 	session, err := service.Get(id)
 	if err != nil {
 		fmt.Printf("%v\n", err)
@@ -112,16 +112,29 @@ func Edit(service *sessionserv.Service) {
 		return
 	}
 
-	fmt.Println("Sessão atualizado com sucesso.")
+	fmt.Println("Sessão atualizada com sucesso.")
 }
 
 func Delete(service *sessionserv.Service) {
-	id := utils.StringPrompt("Digite o id do Sessão:")
-	err := service.Delete(id)
+	id := utils.StringPrompt("Digite o id da Sessão:")
 
+	session, err := service.Get(id)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
 	}
-	fmt.Println("Sessão excluído com sucesso.")
+
+	PrintSession(*session)
+	confirmDeletion := utils.ConfirmDeletePrompt()
+	if !confirmDeletion {
+		fmt.Println("Exclusão cancelada.")
+		return
+	}
+
+	err = service.Delete(id)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	fmt.Println("Sessão excluída com sucesso.")
 }

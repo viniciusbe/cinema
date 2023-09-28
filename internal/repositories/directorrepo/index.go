@@ -30,7 +30,7 @@ func (r *Repository) ListAll() ([]entities.Director, error) {
 
 func (r *Repository) Find(id string) (*entities.Director, error) {
 	var director *entities.Director
-	err := r.DB.Find(&director, id).Error
+	err := r.DB.First(&director, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar diretor -> %w", err)
 	}

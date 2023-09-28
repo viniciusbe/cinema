@@ -44,10 +44,14 @@ func ListAll(service *buyerserv.Service) {
 		return
 	}
 
-	fmt.Println("Pagantes:")
-	PrintBuyerLabel()
-	for _, buyer := range buyers {
-		PrintBuyer(buyer)
+	if len(buyers) > 0 {
+		fmt.Println("Pagantes:")
+		PrintBuyerLabel()
+		for _, buyer := range buyers {
+			PrintBuyer(buyer)
+		}
+	} else {
+		fmt.Println("Nenhum dado encontrado.")
 	}
 }
 
@@ -89,7 +93,21 @@ func Edit(service *buyerserv.Service) {
 
 func Delete(service *buyerserv.Service) {
 	id := utils.StringPrompt("Id do Pagante:")
-	err := service.Delete(id)
+	buyer, err := service.Get(id)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+
+	PrintBuyerLabel()
+	PrintBuyer(*buyer)
+	confirmDeletion := utils.ConfirmDeletePrompt()
+	if !confirmDeletion {
+		fmt.Println("Exclusão cancelada.")
+		return
+	}
+
+	err = service.Delete(id)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return

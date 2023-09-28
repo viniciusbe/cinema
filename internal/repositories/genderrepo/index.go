@@ -30,7 +30,7 @@ func (r *Repository) ListAll() ([]entities.Gender, error) {
 
 func (r *Repository) Find(id string) (*entities.Gender, error) {
 	var gender *entities.Gender
-	err := r.DB.Find(&gender, id).Error
+	err := r.DB.First(&gender, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar gênero -> %w", err)
 	}

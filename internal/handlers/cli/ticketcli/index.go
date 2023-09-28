@@ -42,9 +42,13 @@ func ListAll(service *ticketserv.Service) {
 		return
 	}
 
-	fmt.Println("Ingressos:")
-	for _, ticket := range tickets {
-		PrintTicket(ticket)
+	if len(tickets) > 0 {
+		fmt.Println("Ingressos:")
+		for _, ticket := range tickets {
+			PrintTicket(ticket)
+		}
+	} else {
+		fmt.Println("Nenhum dado encontrado.")
 	}
 }
 
@@ -84,8 +88,20 @@ func Edit(service *ticketserv.Service) {
 
 func Delete(service *ticketserv.Service) {
 	id := utils.StringPrompt("Digite o id do Ingresso:")
-	err := service.Delete(id)
+	ticket, err := service.Get(id)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
 
+	PrintTicket(*ticket)
+	confirmDeletion := utils.ConfirmDeletePrompt()
+	if !confirmDeletion {
+		fmt.Println("Exclusão cancelada.")
+		return
+	}
+
+	err = service.Delete(id)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return

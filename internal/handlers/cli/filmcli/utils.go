@@ -103,7 +103,6 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 		case EditSaveOption:
 			return gendersIDToUpdate, SaveChanges
 		case EditCancelOption:
-			fmt.Println("Alterações descartadas")
 			return nil, DiscardChanges
 		default:
 			utils.PrintInvalidOption()

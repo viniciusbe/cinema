@@ -3,7 +3,7 @@
 - [x] Banco
 - [x] CLI
 - [x] Fazer documentação
-- [ ] Criar registros
+- [x] Criar registros
 - [ ] Gerar arquivo de backup
 - Genero
   - [x] Listar
