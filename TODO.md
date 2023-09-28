@@ -4,7 +4,7 @@
 - [x] CLI
 - [x] Fazer documentação
 - [x] Criar registros
-- [ ] Gerar arquivo de backup
+- [x] Gerar arquivo de backup
 - Genero
   - [x] Listar
   - [x] Criação
