@@ -11,6 +11,8 @@ import (
 	"cinema/internal/handlers/gormdb"
 	"cinema/internal/utils"
 	"fmt"
+
+	"github.com/joho/godotenv"
 )
 
 const (
@@ -29,6 +31,11 @@ func main() {
 	if err != nil {
 		fmt.Printf("Erro na conexão com o banco -> %v\n", err)
 		panic(err)
+	}
+
+	err = godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
 	}
 
 	db.AutoMigrate(&entities.Gender{}, &entities.Director{}, &entities.Film{}, &entities.Session{}, &entities.Buyer{}, &entities.Ticket{})
