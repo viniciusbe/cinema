@@ -1,0 +1,35 @@
+LOAD CSV WITH HEADERS FROM 'file:///buyers.csv' AS buyer
+MERGE (br:Buyer {buyerID: buyer.id})
+  ON CREATE SET br.name = buyer.name, br.document = buyer.document;
+
+LOAD CSV WITH HEADERS FROM 'file:///directors.csv' AS director
+MERGE (dr:Director {directorID: director.id})
+  ON CREATE SET dr.name = director.name;
+
+LOAD CSV WITH HEADERS FROM 'file:///genders.csv' AS gender
+MERGE (gn:Gender {genderID: gender.id})
+  ON CREATE SET gn.description = gender.description;
+
+LOAD CSV WITH HEADERS FROM 'file:///films.csv' AS film
+MERGE (fm:Film {filmID: film.id})
+  ON CREATE SET fm.name = film.name, fm.duration = film.duration, fm.synopsis = film.synopsis,fm.age = film.age,fm.director = film.director_id;
+
+MATCH (fm:Film),(dr:Director)
+WHERE fm.director=dr.directorID
+CREATE (fm)-[:DIRECTED_BY]->(dr);
+
+MATCH (fm:Film)
+REMOVE fm.director;
+
+----
+
+LOAD CSV WITH HEADERS FROM 'file:///sessions.csv' AS session
+MERGE (sn:Session {sessionID: session.id})
+  ON CREATE SET sn.time = session.time, sn.language = session.language, sn.room = session.room,sn.film = session.film_id;
+
+MATCH (sn:Session),(fm:Film)
+WHERE sn.film=fm.filmID
+CREATE (sn)-[:SHOW]->(fm);
+
+MATCH (sn:Session)
+REMOVE sn.film;
