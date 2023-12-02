@@ -3,7 +3,7 @@ package sessioncli
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/services/sessionserv"
-	"cinema/internal/repositories/sessionrepo"
+	"cinema/internal/repositories/neo4jdb/sessionrepo"
 	"cinema/internal/utils"
 	"fmt"
 
@@ -11,7 +11,7 @@ import (
 )
 
 func Route(db *gorm.DB) {
-	repo := sessionrepo.NewGormRepository(db)
+	repo := sessionrepo.NewNeo4jRepository(db)
 	serv := sessionserv.New(repo)
 
 out:

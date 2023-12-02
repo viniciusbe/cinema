@@ -14,5 +14,5 @@ const (
 )
 
 func PrintDirector(dir entities.Director) {
-	fmt.Printf("[%v]: %s\n", dir.ID, dir.Name)
+	fmt.Printf("[%v]: %s\n", dir.DirectorID, dir.Name)
 }

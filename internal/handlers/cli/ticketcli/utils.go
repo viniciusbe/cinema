@@ -25,9 +25,9 @@ const (
 )
 
 func PrintTicket(ticket entities.Ticket) {
-	fmt.Printf("ID: %v | Assento: %s | %s\n", ticket.ID, ticket.Seat, ticket.Modality)
+	fmt.Printf("ID: %v | Assento: %s | %s\n", ticket.TickedID, ticket.Seat, ticket.Modality)
 	fmt.Printf("Pagante: %s\n", ticket.Buyer.Name)
-	fmt.Printf("Id da sessão: %v\n", ticket.SessionID)
+	fmt.Printf("Id da sessão: %v\n", ticket.Session.SessionID)
 
 	utils.PrintDivider()
 }
@@ -36,8 +36,8 @@ func TicketCreationPrompt() entities.Ticket {
 	ticket := entities.Ticket{}
 	ticket.Seat = SeatPrompt()
 	ticket.Modality = ModalityPrompt()
-	ticket.BuyerID = utils.IntPrompt("Id do pagante:")
-	ticket.SessionID = utils.IntPrompt("Id da sessão:")
+	ticket.Buyer.BuyerID = utils.IntPrompt("Id do pagante:")
+	ticket.Session.SessionID = utils.IntPrompt("Id da sessão:")
 
 	return ticket
 }
@@ -61,9 +61,9 @@ func TicketEditPrompt(ticket *entities.Ticket) bool {
 		case EditModalityOption:
 			ticket.Modality = ModalityPrompt()
 		case EditBuyerIdOption:
-			ticket.BuyerID = utils.IntPrompt("Id do pagante:")
+			ticket.Buyer.BuyerID = utils.IntPrompt("Id do pagante:")
 		case EditSessionIdOption:
-			ticket.SessionID = utils.IntPrompt("Id da sessão:")
+			ticket.Session.SessionID = utils.IntPrompt("Id da sessão:")
 		case EditSaveOption:
 			return SaveChanges
 		case EditCancelOption:

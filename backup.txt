@@ -21,8 +21,6 @@ CREATE (fm)-[:DIRECTED_BY]->(dr);
 MATCH (fm:Film)
 REMOVE fm.director;
 
-----
-
 LOAD CSV WITH HEADERS FROM 'file:///sessions.csv' AS session
 MERGE (sn:Session {sessionID: session.id})
   ON CREATE SET sn.time = session.time, sn.language = session.language, sn.room = session.room,sn.film = session.film_id;
@@ -33,3 +31,23 @@ CREATE (sn)-[:SHOW]->(fm);
 
 MATCH (sn:Session)
 REMOVE sn.film;
+
+LOAD CSV WITH HEADERS FROM 'file:///tickets.csv' AS ticket
+MERGE (tk:Ticket {ticketID: ticket.id})
+  ON CREATE SET tk.seat = ticket.seat, tk.modality = ticket.modality, tk.buyer = ticket.buyer_id,tk.session = ticket.session_id;
+
+MATCH (tk:Ticket),(sn:Session)
+WHERE tk.session=sn.sessionID
+CREATE (tk)-[:BOUGHT_FOR]->(sn);
+
+MATCH (tk:Ticket),(br:Buyer)
+WHERE tk.buyer=br.buyerID
+CREATE (tk)-[:BOUGHT_BY]->(br);
+
+MATCH (tk:Ticket)
+REMOVE tk.buyer, tk.session;
+
+LOAD CSV WITH HEADERS FROM 'file:///film_genders.csv' AS filmgender
+MATCH (fm:Film {filmID: filmgender.film_id})
+MATCH (gn:Gender {genderID: filmgender.gender_id})
+  MERGE (fm)-[:HAS_GENDER]->(gn)

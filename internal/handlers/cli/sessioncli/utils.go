@@ -47,7 +47,7 @@ func SessionListingPrompt() string {
 }
 
 func PrintSession(session entities.Session) {
-	fmt.Printf("ID: %v | %s | %s\n", session.ID, session.Film.Name, session.Language)
+	fmt.Printf("ID: %v | %s | %s\n", session.SessionID, session.Film.Name, session.Language)
 	fmt.Printf("Sala: %v\n", session.Room)
 	fmt.Printf("Data e hora: %s\n", FormatTime(session.Time))
 
@@ -56,7 +56,7 @@ func PrintSession(session entities.Session) {
 
 func SessionCreationPrompt() entities.Session {
 	session := entities.Session{}
-	session.FilmID = utils.IntPrompt("Id do filme:")
+	session.Film.FilmID = utils.IntPrompt("Id do filme:")
 	session.Language = LanguagePrompt()
 	session.Room = RoomPrompt()
 	session.Time = TimePrompt()
@@ -79,7 +79,7 @@ func SessionEditPrompt(session *entities.Session) bool {
 
 		switch input {
 		case EditFilmIdOption:
-			session.FilmID = utils.IntPrompt("Id do filme:")
+			session.Film.FilmID = utils.IntPrompt("Id do filme:")
 		case EditLanguageOption:
 			session.Language = LanguagePrompt()
 		case EditRoomOption:

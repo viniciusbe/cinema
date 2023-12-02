@@ -45,7 +45,7 @@ func gendersToString(genders []entities.Gender) string {
 
 func PrintFilm(film entities.Film) {
 	genders := gendersToString(film.Genders)
-	fmt.Printf("ID: %v | %s | %v minutos | %s\n", film.ID, film.Name, film.Duration, genders)
+	fmt.Printf("ID: %v | %s | %v minutos | %s\n", film.FilmID, film.Name, film.Duration, genders)
 	fmt.Printf("Sinopse: %s\n", film.Synopsis)
 	if film.Age == NoAgeFilm {
 		fmt.Println("Classificação indicativa: Livre")
@@ -62,7 +62,7 @@ func FilmPrompt() (entities.Film, []uint) {
 	film.Duration = utils.IntPrompt("Duração do filme em minutos:")
 	film.Synopsis = utils.StringPrompt("Sinopse do filme:")
 	film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
-	film.DirectorID = utils.IntPrompt("Id do diretor do filme:")
+	film.Director.DirectorID = utils.IntPrompt("Id do diretor do filme:")
 	gendersID := GenderPrompt()
 
 	return film, gendersID
@@ -96,7 +96,7 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 		case EditAgeOption:
 			film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
 		case EditDirectorOption:
-			film.DirectorID = utils.IntPrompt("ID do diretor do filme:")
+			film.Director.DirectorID = utils.IntPrompt("ID do diretor do filme:")
 		case EditGendersOption:
 			fmt.Println("Informe os ids dos novos gêneros (todos os gêneros atuais serão sobrescritos):")
 			gendersIDToUpdate = GenderPrompt()

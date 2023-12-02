@@ -3,15 +3,16 @@ package gendercli
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/services/genderserv"
-	"cinema/internal/repositories/genderrepo"
+	"cinema/internal/repositories/neo4jdb/genderrepo"
 	"cinema/internal/utils"
+	"context"
 	"fmt"
 
-	"gorm.io/gorm"
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
 
-func Route(db *gorm.DB) {
-	repo := genderrepo.NewGormRepository(db)
+func Route(driver neo4j.DriverWithContext, ctx context.Context) {
+	repo := genderrepo.NewNeo4jRepository(driver, ctx)
 	serv := genderserv.New(repo)
 
 out:

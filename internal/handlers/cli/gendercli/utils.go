@@ -14,5 +14,5 @@ const (
 )
 
 func PrintGender(gender entities.Gender) {
-	fmt.Printf("[%v]: %s\n", gender.ID, gender.Description)
+	fmt.Printf("[%v]: %s\n", gender.GenderID, gender.Description)
 }

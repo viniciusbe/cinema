@@ -51,7 +51,7 @@ func BuyerEditPrompt(buyer *entities.Buyer) bool {
 }
 
 func PrintBuyer(buyer entities.Buyer) {
-	fmt.Printf("[%v]: %s | %s\n", buyer.ID, buyer.Name, buyer.Document)
+	fmt.Printf("[%v]: %s | %s\n", buyer.BuyerID, buyer.Name, buyer.Document)
 }
 
 func PrintBuyerLabel() {

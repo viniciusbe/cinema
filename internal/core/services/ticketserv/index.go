@@ -52,19 +52,19 @@ func (s *Service) Delete(id string) error {
 }
 
 func (s *Service) Validate(ticket *entities.Ticket) error {
-	buyer, err := s.repository.FindBuyerById(ticket.BuyerID)
+	buyer, err := s.repository.FindBuyerById(ticket.Buyer.BuyerID)
 	if err != nil {
 		return err
 	}
 	ticket.Buyer = *buyer
 
-	session, err := s.repository.FindSessionById(ticket.SessionID)
+	session, err := s.repository.FindSessionById(ticket.Session.SessionID)
 	if err != nil {
 		return err
 	}
 	ticket.Session = *session
 
-	isSeatOccupied := s.repository.FindBySessionIdAndSeat(ticket.SessionID, ticket.Seat)
+	isSeatOccupied := s.repository.FindBySessionIdAndSeat(ticket.Session.SessionID, ticket.Seat)
 	if isSeatOccupied {
 		return errors.New("Assento não disponível.")
 	}

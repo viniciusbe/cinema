@@ -31,7 +31,7 @@ func (s *Service) Get(id string) (*entities.Session, error) {
 }
 
 func (s *Service) Update(session *entities.Session) error {
-	film, err := s.repository.FindFilmById(session.FilmID)
+	film, err := s.repository.FindFilmById(session.Film.FilmID)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func (s *Service) Update(session *entities.Session) error {
 }
 
 func (s *Service) Create(session *entities.Session) error {
-	film, err := s.repository.FindFilmById(session.FilmID)
+	film, err := s.repository.FindFilmById(session.Film.FilmID)
 	if err != nil {
 		return err
 	}

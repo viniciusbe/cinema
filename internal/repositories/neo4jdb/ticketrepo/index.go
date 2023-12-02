@@ -12,7 +12,7 @@ type Repository struct {
 	DB *gorm.DB
 }
 
-func NewGormRepository(gormdb *gorm.DB) ports.TicketRepository {
+func NewNeo4jRepository(gormdb *gorm.DB) ports.TicketRepository {
 	return &Repository{
 		DB: gormdb,
 	}
@@ -49,13 +49,13 @@ func (r *Repository) Insert(ticket *entities.Ticket) error {
 
 func (r *Repository) Save(ticket *entities.Ticket) error {
 	var buyer *entities.Buyer
-	buyerErr := r.DB.Find(&buyer, ticket.BuyerID).Error
+	buyerErr := r.DB.Find(&buyer, ticket.Buyer.BuyerID).Error
 	if buyerErr != nil {
 		return fmt.Errorf("Erro ao buscar pagante -> %w", buyerErr)
 	}
 
 	var session *entities.Session
-	sessionErr := r.DB.Find(&session, ticket.SessionID).Error
+	sessionErr := r.DB.Find(&session, ticket.Session.SessionID).Error
 	if sessionErr != nil {
 		return fmt.Errorf("Erro ao buscar sessão -> %w", sessionErr)
 	}

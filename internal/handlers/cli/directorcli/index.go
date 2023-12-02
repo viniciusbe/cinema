@@ -3,7 +3,7 @@ package directorcli
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/services/directorserv"
-	"cinema/internal/repositories/directorrepo"
+	"cinema/internal/repositories/neo4jdb/directorrepo"
 	"cinema/internal/utils"
 	"fmt"
 
@@ -11,7 +11,7 @@ import (
 )
 
 func Route(db *gorm.DB) {
-	repo := directorrepo.NewGormRepository(db)
+	repo := directorrepo.NewNeo4jRepository(db)
 	serv := directorserv.New(repo)
 
 out:

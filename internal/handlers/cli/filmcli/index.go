@@ -2,7 +2,7 @@ package filmcli
 
 import (
 	"cinema/internal/core/services/filmserv"
-	"cinema/internal/repositories/filmrepo"
+	"cinema/internal/repositories/neo4jdb/filmrepo"
 	"cinema/internal/utils"
 	"fmt"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func Route(db *gorm.DB) {
-	repo := filmrepo.NewGormRepository(db)
+	repo := filmrepo.NewNeo4jRepository(db)
 	serv := filmserv.New(repo)
 
 out:

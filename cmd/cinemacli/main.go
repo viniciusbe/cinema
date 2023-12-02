@@ -1,18 +1,10 @@
 package main
 
 import (
-	"cinema/internal/core/domain/entities"
-	"cinema/internal/handlers/cli/buyercli"
-	"cinema/internal/handlers/cli/directorcli"
-	"cinema/internal/handlers/cli/filmcli"
 	"cinema/internal/handlers/cli/gendercli"
-	"cinema/internal/handlers/cli/sessioncli"
-	"cinema/internal/handlers/cli/ticketcli"
-	"cinema/internal/handlers/gormdb"
+	"cinema/internal/handlers/neo4j"
 	"cinema/internal/utils"
 	"fmt"
-
-	"github.com/joho/godotenv"
 )
 
 const (
@@ -26,19 +18,7 @@ const (
 )
 
 func main() {
-	db, err := gormdb.SetupGormDB()
-
-	if err != nil {
-		fmt.Printf("Erro na conexão com o banco -> %v\n", err)
-		panic(err)
-	}
-
-	err = godotenv.Load()
-	if err != nil {
-		fmt.Println("Error loading .env file")
-	}
-
-	db.AutoMigrate(&entities.Gender{}, &entities.Director{}, &entities.Film{}, &entities.Session{}, &entities.Buyer{}, &entities.Ticket{})
+	driver, ctx := neo4j.SetupNeo4jDB()
 
 out:
 	for {
@@ -56,17 +36,17 @@ out:
 
 		switch selectedOption {
 		case GendersOption:
-			gendercli.Route(db)
-		case DirectorsOption:
-			directorcli.Route(db)
-		case FilmsOption:
-			filmcli.Route(db)
-		case SessionsOption:
-			sessioncli.Route(db)
-		case BuyersOption:
-			buyercli.Route(db)
-		case TicketsOption:
-			ticketcli.Route(db)
+			gendercli.Route(driver, ctx)
+		// case DirectorsOption:
+		// 	directorcli.Route(driver, ctx)
+		// case FilmsOption:
+		// 	filmcli.Route(driver, ctx)
+		// case SessionsOption:
+		// 	sessioncli.Route(driver, ctx)
+		// case BuyersOption:
+		// 	buyercli.Route(driver, ctx)
+		// case TicketsOption:
+		// 	ticketcli.Route(driver, ctx)
 		case ExitOption:
 			break out
 		default:

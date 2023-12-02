@@ -2,7 +2,7 @@ package ticketcli
 
 import (
 	"cinema/internal/core/services/ticketserv"
-	"cinema/internal/repositories/ticketrepo"
+	"cinema/internal/repositories/neo4jdb/ticketrepo"
 	"cinema/internal/utils"
 	"fmt"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func Route(db *gorm.DB) {
-	repo := ticketrepo.NewGormRepository(db)
+	repo := ticketrepo.NewNeo4jRepository(db)
 	serv := ticketserv.New(repo)
 
 out:

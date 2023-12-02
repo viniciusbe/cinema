@@ -37,7 +37,7 @@ func (s *Service) Update(film *entities.Film, gendersID []uint) error {
 		}
 	}
 
-	director, err := s.repository.FindDirectorById(film.DirectorID)
+	director, err := s.repository.FindDirectorById(film.Director.DirectorID)
 	if err != nil {
 		return err
 	}
@@ -53,7 +53,7 @@ func (s *Service) Create(film *entities.Film, gendersID []uint) error {
 	}
 	film.Genders = genders
 
-	director, err := s.repository.FindDirectorById(film.DirectorID)
+	director, err := s.repository.FindDirectorById(film.Director.DirectorID)
 	if err != nil {
 		return err
 	}

@@ -3,7 +3,7 @@ package buyercli
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/services/buyerserv"
-	"cinema/internal/repositories/buyerrepo"
+	"cinema/internal/repositories/neo4jdb/buyerrepo"
 	"cinema/internal/utils"
 	"fmt"
 
@@ -11,7 +11,7 @@ import (
 )
 
 func Route(db *gorm.DB) {
-	repo := buyerrepo.NewGormRepository(db)
+	repo := buyerrepo.NewNeo4jRepository(db)
 	serv := buyerserv.New(repo)
 
 out:
