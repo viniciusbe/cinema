@@ -28,37 +28,37 @@ func (s *Service) Get(id string) (*entities.Film, error) {
 	return s.repository.Find(id)
 }
 
-func (s *Service) Update(film *entities.Film, gendersID []uint) error {
-	if len(gendersID) > 0 {
-		genders, err := s.repository.FindGendersById(gendersID)
-		film.Genders = genders
-		if err != nil {
-			return err
-		}
-	}
+func (s *Service) Update(film *entities.Film) error {
+	// if len(gendersID) > 0 {
+	// 	genders, err := s.repository.FindGendersById(gendersID)
+	// 	film.Genders = genders
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// }
 
-	director, err := s.repository.FindDirectorById(film.DirectorID)
-	if err != nil {
-		return err
-	}
+	// director, err := s.repository.FindDirectorById(film.DirectorID)
+	// if err != nil {
+	// 	return err
+	// }
 
-	film.Director = *director
+	// film.Director = *director
 	return s.repository.Save(film)
 }
 
-func (s *Service) Create(film *entities.Film, gendersID []uint) error {
-	genders, genderErr := s.repository.FindGendersById(gendersID)
-	if genderErr != nil {
-		return genderErr
-	}
-	film.Genders = genders
+func (s *Service) Create(film *entities.Film) error {
+	// genders, genderErr := s.repository.FindGendersById(gendersID)
+	// if genderErr != nil {
+	// 	return genderErr
+	// }
+	// film.Genders = genders
 
-	director, err := s.repository.FindDirectorById(film.DirectorID)
-	if err != nil {
-		return err
-	}
+	// director, err := s.repository.FindDirectorById(film.DirectorID)
+	// if err != nil {
+	// 	return err
+	// }
 
-	film.Director = *director
+	// film.Director = *director
 	return s.repository.Insert(film)
 }
 

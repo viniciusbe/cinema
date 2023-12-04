@@ -8,51 +8,51 @@ import (
 
 type Gender struct {
 	gorm.Model
-	Description string
+	Description string `json:"description"`
 	Films       []Film `gorm:"many2many:film_genders;"`
 }
 
 type Director struct {
 	gorm.Model
-	Name  string
+	Name  string `json:"name"`
 	Films []Film
 }
 
 type Film struct {
 	gorm.Model
-	Name       string
-	Duration   uint
-	Synopsis   string
-	Age        uint
+	Name       string `json:"name"`
+	Duration   uint   `json:"duration"`
+	Synopsis   string `json:"synopsis"`
+	Age        uint   `json:"age"`
 	DirectorID uint
-	Director   Director
-	Genders    []Gender `gorm:"many2many:film_genders;"`
+	Director   Director `json:"director"`
+	Genders    []Gender `gorm:"many2many:film_genders;" json:"genders"`
 	Sessions   []Session
 }
 
 type Session struct {
 	gorm.Model
-	Time     time.Time
-	Language string
-	Room     uint
-	FilmID   uint
+	Time     time.Time `json:"time"`
+	Language string    `json:"language"`
+	Room     uint      `json:"room"`
+	FilmID   uint      `json:"filmId"`
 	Film     Film
 	Tickets  []Ticket
 }
 
 type Buyer struct {
 	gorm.Model
-	Name     string
-	Document string
+	Name     string `json:"name"`
+	Document string `json:"document"`
 	Tickets  []Ticket
 }
 
 type Ticket struct {
 	gorm.Model
-	Seat      string
-	Modality  string
-	BuyerID   uint
-	SessionID uint
+	Seat      string `json:"seat"`
+	Modality  string `json:"modality"`
+	BuyerID   uint   `json:"buyerId"`
+	SessionID uint   `json:"sessionId"`
 	Buyer     Buyer
 	Session   Session
 }

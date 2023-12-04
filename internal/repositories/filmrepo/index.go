@@ -39,7 +39,7 @@ func (r *Repository) Find(id string) (*entities.Film, error) {
 }
 
 func (r *Repository) Insert(film *entities.Film) error {
-	err := r.DB.Save(&film).Error
+	err := r.DB.Create(&film).Error
 	if err != nil {
 		return fmt.Errorf("Erro ao inserir filme -> %w", err)
 	}
@@ -49,7 +49,7 @@ func (r *Repository) Insert(film *entities.Film) error {
 
 func (r *Repository) Save(film *entities.Film) error {
 	r.DB.Model(&film).Association("Genders").Replace(film.Genders)
-	err := r.DB.Save(&film).Error
+	err := r.DB.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&film).Error
 	if err != nil {
 		return fmt.Errorf("Erro ao atualizar filme -> %w", err)
 	}
