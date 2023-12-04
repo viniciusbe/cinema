@@ -85,10 +85,28 @@ func (r *Repository) Find(id string) (*entities.Gender, error) {
 }
 
 func (r *Repository) Insert(gender *entities.Gender) error {
+	ctx := r.ctx
+	session := r.driver.NewSession(ctx, neo4j.SessionConfig{DatabaseName: "neo4j"})
+	defer session.Close(ctx)
 
-	// if err != nil {
-	// 	return fmt.Errorf("Erro ao inserir gênero -> %w", err)
-	// }
+	_, err := session.ExecuteWrite(ctx,
+		func(tx neo4j.ManagedTransaction) (any, error) {
+			result, err := tx.Run(ctx,
+				`MATCH (g:Gender)
+				WITH g ORDER BY g.genderID DESC LIMIT 1
+				CREATE (gn:Gender {genderID: toString(toInteger(g.genderID) + 1),description:$description})`,
+				map[string]any{
+					"description": gender.Description,
+				})
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		})
+
+	if err != nil {
+		return fmt.Errorf("Erro ao criar gênero -> %w", err)
+	}
 
 	return nil
 }
