@@ -1,53 +1,53 @@
-package session
+package ticket
 
 import (
 	"cinema/internal/core/domain/entities"
-	"cinema/internal/core/services/sessionserv"
+	"cinema/internal/core/services/ticketserv"
 	"cinema/internal/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type Handler struct {
-	service *sessionserv.Service
+	service *ticketserv.Service
 }
 
 func (h *Handler) ListAll(c *fiber.Ctx) error {
 
-	sessions, err := h.service.ListAll()
+	tickets, err := h.service.ListAll()
 
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	return c.JSON(sessions)
+	return c.JSON(tickets)
 }
 
 func (h *Handler) Create(c *fiber.Ctx) error {
-	session := new(entities.Session)
-	c.BodyParser(session)
-	err := h.service.Create(session)
+	ticket := new(entities.Ticket)
+	c.BodyParser(ticket)
+	err := h.service.Create(ticket)
 
 	if err != nil {
-		return fiber.ErrInternalServerError
+		return c.Status(400).SendString(err.Error())
 	}
 
-	return c.JSON(session)
+	return c.JSON(ticket)
 }
 
 func (h *Handler) Edit(c *fiber.Ctx) error {
 	id := c.Params("id")
-	session := new(entities.Session)
-	c.BodyParser(session)
+	ticket := new(entities.Ticket)
+	c.BodyParser(ticket)
 
-	session.ID = utils.StringToUint(id)
+	ticket.ID = utils.StringToUint(id)
 
-	err := h.service.Update(session)
+	err := h.service.Update(ticket)
 
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
 
-	return c.JSON(session)
+	return c.JSON(ticket)
 }
 
 func (h *Handler) Delete(c *fiber.Ctx) error {

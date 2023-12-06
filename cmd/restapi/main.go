@@ -6,12 +6,17 @@ import (
 	"cinema/internal/handlers/rest/buyerrest"
 	"cinema/internal/handlers/rest/film"
 	"cinema/internal/handlers/rest/session"
+	"cinema/internal/handlers/rest/ticket"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
 	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
 
 	db, err := gormdb.SetupGormDB()
 
@@ -34,9 +39,9 @@ func main() {
 	sessionRoute := app.Group("/sessions")
 	session.Route(sessionRoute, sessionService)
 
-	// ticketService := Ticket(db)
-	// ticketRoute := app.Group("/tickets")
-	// ticket.Route(ticketRoute, ticketService)
+	ticketService := Ticket(db)
+	ticketRoute := app.Group("/tickets")
+	ticket.Route(ticketRoute, ticketService)
 
 	app.Listen(":3000")
 }

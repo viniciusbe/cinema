@@ -1,12 +1,12 @@
-package film
+package ticket
 
 import (
-	"cinema/internal/core/services/filmserv"
+	"cinema/internal/core/services/ticketserv"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func Route(route fiber.Router, service *filmserv.Service) {
+func Route(route fiber.Router, service *ticketserv.Service) {
 	handler := Handler{
 		service: service,
 	}
@@ -15,6 +15,4 @@ func Route(route fiber.Router, service *filmserv.Service) {
 	route.Post("/", handler.Create)
 	route.Put("/:id", handler.Edit)
 	route.Delete("/:id", handler.Delete)
-
-	route.Get("/options", handler.ListOptions)
 }

@@ -59,3 +59,12 @@ func (h *Handler) Delete(c *fiber.Ctx) error {
 
 	return c.SendString("Excluido com sucesso")
 }
+
+func (h *Handler) ListOptions(c *fiber.Ctx) error {
+	directors, genders, err := h.service.ListOptions()
+	if err != nil {
+		return c.Status(400).SendString("Erro ao buscar opçoes")
+	}
+
+	return c.JSON(fiber.Map{"directors": directors, "genders": genders})
+}

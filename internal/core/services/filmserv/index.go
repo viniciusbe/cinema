@@ -65,3 +65,22 @@ func (s *Service) Create(film *entities.Film) error {
 func (s *Service) Delete(id string) error {
 	return s.repository.Delete(id)
 }
+
+func (s *Service) ListOptions() ([]entities.Director, []entities.Gender, error) {
+	directors, err := s.repository.GetDirectors()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	genders, err := s.repository.GetGenders()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return directors, genders, nil
+}
+
+type FilmOptions struct {
+	directors []entities.Director
+	genders   []entities.Gender
+}

@@ -33,7 +33,7 @@ func (s *Service) Get(id string) (*entities.Session, error) {
 func (s *Service) Update(session *entities.Session) error {
 	film, err := s.repository.FindFilmById(session.FilmID)
 	if err != nil {
-		return err
+		return errors.New("Erro aqui")
 	}
 	session.Film = *film
 

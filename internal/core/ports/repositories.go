@@ -29,6 +29,8 @@ type FilmRepository interface {
 	Delete(id string) error
 	FindGendersById(ids []uint) ([]entities.Gender, error)
 	FindDirectorById(id uint) (*entities.Director, error)
+	GetDirectors() ([]entities.Director, error)
+	GetGenders() ([]entities.Gender, error)
 }
 
 type SessionRepository interface {

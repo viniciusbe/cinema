@@ -85,3 +85,23 @@ func (r *Repository) FindDirectorById(id uint) (*entities.Director, error) {
 
 	return director, nil
 }
+
+func (r *Repository) GetDirectors() ([]entities.Director, error) {
+	var directors []entities.Director
+	err := r.DB.Find(&directors).Error
+	if err != nil {
+		return nil, fmt.Errorf("Erro ao buscar diretores -> %w", err)
+	}
+
+	return directors, nil
+}
+
+func (r *Repository) GetGenders() ([]entities.Gender, error) {
+	var genders []entities.Gender
+	err := r.DB.Find(&genders).Error
+	if err != nil {
+		return nil, fmt.Errorf("Erro ao buscar gêneros -> %w", err)
+	}
+
+	return genders, nil
+}
