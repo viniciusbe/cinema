@@ -16,6 +16,7 @@ Clone o repositório da sua aplicação Go do GitHub ou qualquer outra fonte.
    ```bash
    git clone https://github.com/viniciusbe/cinema.git
    cd cinema
+   git checkout neo4j-db
    ```
 
 ## 3. Configurando o banco de dados
