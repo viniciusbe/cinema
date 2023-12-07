@@ -49,7 +49,7 @@ type SessionRepository interface {
 
 type BuyerRepository interface {
 	ListAll() ([]entities.Buyer, error)
-	Find(id string) (*entities.Buyer, error)
+	Find(id string) (*entities.Buyer, []entities.Ticket, error)
 	Insert(buyer *entities.Buyer) error
 	Save(buyer *entities.Buyer) error
 	Delete(id string) error

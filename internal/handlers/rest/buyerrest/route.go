@@ -12,6 +12,7 @@ func Route(route fiber.Router, service *buyerserv.Service) {
 	}
 
 	route.Get("/", handler.ListAll)
+	route.Get("/:id", handler.GetDetails)
 	route.Post("/", handler.Create)
 	route.Put("/:id", handler.Edit)
 	route.Delete("/:id", handler.Delete)

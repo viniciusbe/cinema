@@ -24,7 +24,7 @@ func (s *Service) ListAll() ([]entities.Buyer, error) {
 	return buyers, nil
 }
 
-func (s *Service) Get(id string) (*entities.Buyer, error) {
+func (s *Service) Get(id string) (*entities.Buyer, []entities.Ticket, error) {
 	return s.repository.Find(id)
 }
 

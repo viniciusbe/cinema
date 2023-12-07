@@ -63,8 +63,18 @@ func (h *Handler) Delete(c *fiber.Ctx) error {
 func (h *Handler) ListOptions(c *fiber.Ctx) error {
 	directors, genders, err := h.service.ListOptions()
 	if err != nil {
-		return c.Status(400).SendString("Erro ao buscar opçoes")
+		return c.Status(400).SendString(err.Error())
 	}
 
 	return c.JSON(fiber.Map{"directors": directors, "genders": genders})
+}
+
+func (h *Handler) GetDetails(c *fiber.Ctx) error {
+	id := c.Params("id")
+	movie, err := h.service.Get(id)
+	if err != nil {
+		return c.Status(400).SendString(err.Error())
+	}
+
+	return c.JSON(movie)
 }

@@ -45,7 +45,7 @@ func (h *Handler) Edit(c *fiber.Ctx) error {
 	err := h.service.Update(buyer)
 
 	if err != nil {
-		return fiber.ErrInternalServerError
+		return c.Status(400).SendString(err.Error())
 	}
 
 	return c.JSON(buyer)
@@ -59,4 +59,16 @@ func (h *Handler) Delete(c *fiber.Ctx) error {
 	}
 
 	return c.SendString("Excluido com sucesso")
+}
+
+func (h *Handler) GetDetails(c *fiber.Ctx) error {
+	id := c.Params("id")
+	buyer, tickets, err := h.service.Get(id)
+	if err != nil {
+		return c.Status(400).SendString(err.Error())
+	}
+
+	buyer.Tickets = tickets
+
+	return c.JSON(buyer)
 }

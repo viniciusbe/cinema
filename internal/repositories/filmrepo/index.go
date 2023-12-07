@@ -30,7 +30,7 @@ func (r *Repository) ListAll() ([]entities.Film, error) {
 
 func (r *Repository) Find(id string) (*entities.Film, error) {
 	var film *entities.Film
-	err := r.DB.Preload("Genders").Preload("Director").First(&film, id).Error
+	err := r.DB.Preload("Genders").Preload("Director").Preload("Sessions").First(&film, id).Error
 	if err != nil {
 		return nil, fmt.Errorf("Erro ao encontrar filme -> %w", err)
 	}

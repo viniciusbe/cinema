@@ -28,7 +28,7 @@ func (h *Handler) Create(c *fiber.Ctx) error {
 	err := h.service.Create(session)
 
 	if err != nil {
-		return fiber.ErrInternalServerError
+		return c.Status(400).SendString(err.Error())
 	}
 
 	return c.JSON(session)

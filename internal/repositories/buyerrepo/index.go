@@ -28,14 +28,20 @@ func (r *Repository) ListAll() ([]entities.Buyer, error) {
 	return buyers, nil
 }
 
-func (r *Repository) Find(id string) (*entities.Buyer, error) {
+func (r *Repository) Find(id string) (*entities.Buyer, []entities.Ticket, error) {
 	var buyer *entities.Buyer
 	err := r.DB.First(&buyer, id).Error
 	if err != nil {
-		return nil, fmt.Errorf("Erro ao encontrar pagante -> %w", err)
+		return nil, nil, fmt.Errorf("Erro ao encontrar pagante -> %w", err)
 	}
 
-	return buyer, nil
+	var tickets []entities.Ticket
+	err = r.DB.Preload("Session").Where("buyer_id = ?", id).Find(&tickets).Error
+	if err != nil {
+		return nil, nil, fmt.Errorf("Erro ao encontrar ingressos -> %w", err)
+	}
+
+	return buyer, tickets, nil
 }
 
 func (r *Repository) Insert(buyer *entities.Buyer) error {

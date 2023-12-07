@@ -21,13 +21,14 @@ type Director struct {
 type Film struct {
 	gorm.Model
 	Name       string `json:"name"`
+	Poster     string `json:"poster"`
 	Duration   uint   `json:"duration"`
 	Synopsis   string `json:"synopsis"`
 	Age        uint   `json:"age"`
 	DirectorID uint
-	Director   Director `json:"director"`
-	Genders    []Gender `gorm:"many2many:film_genders;" json:"genders"`
-	Sessions   []Session
+	Director   Director  `json:"director"`
+	Genders    []Gender  `gorm:"many2many:film_genders;" json:"genders"`
+	Sessions   []Session `json:"sessions"`
 }
 
 type Session struct {
@@ -42,9 +43,11 @@ type Session struct {
 
 type Buyer struct {
 	gorm.Model
-	Name     string `json:"name"`
-	Document string `json:"document"`
-	Tickets  []Ticket
+	Name     string   `json:"name"`
+	Document string   `json:"document"`
+	Email    string   `json:"email"`
+	Password string   `json:"password"`
+	Tickets  []Ticket `json:"tickets"`
 }
 
 type Ticket struct {
@@ -54,5 +57,5 @@ type Ticket struct {
 	BuyerID   uint   `json:"buyerId"`
 	SessionID uint   `json:"sessionId"`
 	Buyer     Buyer
-	Session   Session
+	Session   Session `json:"session"`
 }

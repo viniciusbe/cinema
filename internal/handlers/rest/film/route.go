@@ -11,10 +11,11 @@ func Route(route fiber.Router, service *filmserv.Service) {
 		service: service,
 	}
 
+	route.Get("/options", handler.ListOptions)
+	route.Get("/:id", handler.GetDetails)
 	route.Get("/", handler.ListAll)
 	route.Post("/", handler.Create)
 	route.Put("/:id", handler.Edit)
 	route.Delete("/:id", handler.Delete)
 
-	route.Get("/options", handler.ListOptions)
 }
