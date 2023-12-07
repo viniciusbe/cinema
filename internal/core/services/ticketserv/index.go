@@ -3,7 +3,6 @@ package ticketserv
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/ports"
-	"errors"
 )
 
 type Service struct {
@@ -52,22 +51,22 @@ func (s *Service) Delete(id string) error {
 }
 
 func (s *Service) Validate(ticket *entities.Ticket) error {
-	buyer, err := s.repository.FindBuyerById(ticket.Buyer.BuyerID)
-	if err != nil {
-		return err
-	}
-	ticket.Buyer = *buyer
+	// buyer, err := s.repository.FindBuyerById(ticket.Buyer.BuyerID)
+	// if err != nil {
+	// 	return err
+	// }
+	// ticket.Buyer = *buyer
 
-	session, err := s.repository.FindSessionById(ticket.Session.SessionID)
-	if err != nil {
-		return err
-	}
-	ticket.Session = *session
+	// session, err := s.repository.FindSessionById(ticket.Session.SessionID)
+	// if err != nil {
+	// 	return err
+	// }
+	// ticket.Session = *session
 
-	isSeatOccupied := s.repository.FindBySessionIdAndSeat(ticket.Session.SessionID, ticket.Seat)
-	if isSeatOccupied {
-		return errors.New("Assento não disponível.")
-	}
+	// isSeatOccupied := s.repository.FindBySessionIdAndSeat(ticket.Session.SessionID, ticket.Seat)
+	// if isSeatOccupied {
+	// 	return errors.New("Assento não disponível.")
+	// }
 
 	return nil
 }

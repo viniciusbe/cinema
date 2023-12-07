@@ -28,10 +28,10 @@ const (
 	AddGenderOption    = "1"
 	RemoveGenderOption = "2"
 
-	NoAgeFilm = 0
+	NoAgeFilm = "0"
 
 	MinGender       = 1
-	GenderExitValue = 0
+	GenderExitValue = "0"
 )
 
 func gendersToString(genders []entities.Gender) string {
@@ -56,22 +56,22 @@ func PrintFilm(film entities.Film) {
 	utils.PrintDivider()
 }
 
-func FilmPrompt() (entities.Film, []uint) {
+func FilmPrompt() (entities.Film, []string) {
 	film := entities.Film{}
 	film.Name = utils.StringPrompt("Nome do filme:")
-	film.Duration = utils.IntPrompt("Duração do filme em minutos:")
+	film.Duration = utils.StringPrompt("Duração do filme em minutos:")
 	film.Synopsis = utils.StringPrompt("Sinopse do filme:")
-	film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
-	film.Director.DirectorID = utils.IntPrompt("Id do diretor do filme:")
+	film.Age = utils.StringPrompt("Idade da class. indicativa do filme (0 para livre):")
+	film.Director.DirectorID = utils.StringPrompt("Id do diretor do filme:")
 	gendersID := GenderPrompt()
 
 	return film, gendersID
 }
 
-func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
+func FilmEditPrompt(film *entities.Film) ([]string, bool) {
 	PrintFilm(*film)
 
-	var gendersIDToUpdate []uint
+	var gendersIDToUpdate []string
 
 	for {
 		fmt.Println("Edição de Filme, escolha uma opção:")
@@ -90,13 +90,13 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 		case EditNameOption:
 			film.Name = utils.StringPrompt("Nome do filme:")
 		case EditDurationOption:
-			film.Duration = utils.IntPrompt("Duração do filme em minutos:")
+			film.Duration = utils.StringPrompt("Duração do filme em minutos:")
 		case EditSynopsisOption:
 			film.Synopsis = utils.StringPrompt("Sinopse do filme:")
 		case EditAgeOption:
-			film.Age = utils.IntPrompt("Idade da class. indicativa do filme (0 para livre):")
+			film.Age = utils.StringPrompt("Idade da class. indicativa do filme (0 para livre):")
 		case EditDirectorOption:
-			film.Director.DirectorID = utils.IntPrompt("ID do diretor do filme:")
+			film.Director.DirectorID = utils.StringPrompt("ID do diretor do filme:")
 		case EditGendersOption:
 			fmt.Println("Informe os ids dos novos gêneros (todos os gêneros atuais serão sobrescritos):")
 			gendersIDToUpdate = GenderPrompt()
@@ -110,10 +110,10 @@ func FilmEditPrompt(film *entities.Film) ([]uint, bool) {
 	}
 }
 
-func GenderPrompt() []uint {
-	var gendersID []uint
+func GenderPrompt() []string {
+	var gendersID []string
 	for {
-		gender := utils.IntPrompt("Id do gênero (0 para finalizar):")
+		gender := utils.StringPrompt("Id do gênero (0 para finalizar):")
 
 		if gender == GenderExitValue {
 			hasNotMinGender := len(gendersID) < MinGender

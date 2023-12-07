@@ -1,6 +1,9 @@
 package main
 
 import (
+	"cinema/internal/handlers/cli/buyercli"
+	"cinema/internal/handlers/cli/directorcli"
+	"cinema/internal/handlers/cli/filmcli"
 	"cinema/internal/handlers/cli/gendercli"
 	"cinema/internal/handlers/neo4j"
 	"cinema/internal/utils"
@@ -26,9 +29,9 @@ out:
 		fmt.Println("[1] Gêneros")
 		fmt.Println("[2] Diretores")
 		fmt.Println("[3] Filmes")
-		fmt.Println("[4] Sessões")
+		// fmt.Println("[4] Sessões")
 		fmt.Println("[5] Pagantes")
-		fmt.Println("[6] Ingressos")
+		// fmt.Println("[6] Ingressos")
 		fmt.Printf("[s] Sair\n\n")
 
 		selectedOption := utils.StringPrompt("")
@@ -37,14 +40,14 @@ out:
 		switch selectedOption {
 		case GendersOption:
 			gendercli.Route(driver, ctx)
-		// case DirectorsOption:
-		// 	directorcli.Route(driver, ctx)
-		// case FilmsOption:
-		// 	filmcli.Route(driver, ctx)
+		case DirectorsOption:
+			directorcli.Route(driver, ctx)
+		case FilmsOption:
+			filmcli.Route(driver, ctx)
 		// case SessionsOption:
 		// 	sessioncli.Route(driver, ctx)
-		// case BuyersOption:
-		// 	buyercli.Route(driver, ctx)
+		case BuyersOption:
+			buyercli.Route(driver, ctx)
 		// case TicketsOption:
 		// 	ticketcli.Route(driver, ctx)
 		case ExitOption:

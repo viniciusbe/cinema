@@ -36,7 +36,7 @@ func TicketCreationPrompt() entities.Ticket {
 	ticket := entities.Ticket{}
 	ticket.Seat = SeatPrompt()
 	ticket.Modality = ModalityPrompt()
-	ticket.Buyer.BuyerID = utils.IntPrompt("Id do pagante:")
+	ticket.Buyer.BuyerID = utils.StringPrompt("Id do pagante:")
 	ticket.Session.SessionID = utils.IntPrompt("Id da sessão:")
 
 	return ticket
@@ -61,7 +61,7 @@ func TicketEditPrompt(ticket *entities.Ticket) bool {
 		case EditModalityOption:
 			ticket.Modality = ModalityPrompt()
 		case EditBuyerIdOption:
-			ticket.Buyer.BuyerID = utils.IntPrompt("Id do pagante:")
+			ticket.Buyer.BuyerID = utils.StringPrompt("Id do pagante:")
 		case EditSessionIdOption:
 			ticket.Session.SessionID = utils.IntPrompt("Id da sessão:")
 		case EditSaveOption:

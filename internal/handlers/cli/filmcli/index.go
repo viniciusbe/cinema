@@ -4,13 +4,14 @@ import (
 	"cinema/internal/core/services/filmserv"
 	"cinema/internal/repositories/neo4jdb/filmrepo"
 	"cinema/internal/utils"
+	"context"
 	"fmt"
 
-	"gorm.io/gorm"
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
 
-func Route(db *gorm.DB) {
-	repo := filmrepo.NewNeo4jRepository(db)
+func Route(driver neo4j.DriverWithContext, ctx context.Context) {
+	repo := filmrepo.NewNeo4jRepository(driver, ctx)
 	serv := filmserv.New(repo)
 
 out:

@@ -3,8 +3,6 @@ package sessionserv
 import (
 	"cinema/internal/core/domain/entities"
 	"cinema/internal/core/ports"
-	"errors"
-	"time"
 )
 
 type Service struct {
@@ -31,31 +29,33 @@ func (s *Service) Get(id string) (*entities.Session, error) {
 }
 
 func (s *Service) Update(session *entities.Session) error {
-	film, err := s.repository.FindFilmById(session.Film.FilmID)
-	if err != nil {
-		return err
-	}
-	session.Film = *film
+	// film, err := s.repository.FindFilmById(session.Film.FilmID)
+	// if err != nil {
+	// 	return err
+	// }
+	// session.Film = *film
 
-	isTimeClash := s.ValidateTime(session)
-	if isTimeClash {
-		return errors.New("Já existe uma sessão nesse horário e sala")
-	}
-	return s.repository.Save(session)
+	// isTimeClash := s.ValidateTime(session)
+	// if isTimeClash {
+	// 	return errors.New("Já existe uma sessão nesse horário e sala")
+	// }
+	// return s.repository.Save(session)
+	return nil
 }
 
 func (s *Service) Create(session *entities.Session) error {
-	film, err := s.repository.FindFilmById(session.Film.FilmID)
-	if err != nil {
-		return err
-	}
-	session.Film = *film
+	// film, err := s.repository.FindFilmById(session.Film.FilmID)
+	// if err != nil {
+	// 	return err
+	// }
+	// session.Film = *film
 
-	isTimeClash := s.ValidateTime(session)
-	if isTimeClash {
-		return errors.New("Erro ao criar sessão -> choque de horários.")
-	}
-	return s.repository.Insert(session)
+	// isTimeClash := s.ValidateTime(session)
+	// if isTimeClash {
+	// 	return errors.New("Erro ao criar sessão -> choque de horários.")
+	// }
+	// return s.repository.Insert(session)
+	return nil
 }
 
 func (s *Service) Delete(id string) error {
@@ -63,18 +63,19 @@ func (s *Service) Delete(id string) error {
 }
 
 func (s *Service) ValidateTime(session *entities.Session) bool {
-	isPreviousTimeClash := false
+	// isPreviousTimeClash := false
 
-	previousSession := s.repository.FindFirstBeforeTime(session.Room, session.Time)
-	if previousSession != nil {
-		previousSessionEndTime := previousSession.Time.Add(time.Minute * time.Duration(previousSession.Film.Duration))
-		isPreviousTimeClash = previousSessionEndTime.After(session.Time)
-	}
+	// previousSession := s.repository.FindFirstBeforeTime(session.Room, session.Time)
+	// if previousSession != nil {
+	// 	previousSessionEndTime := previousSession.Time.Add(time.Minute * time.Duration(previousSession.Film.Duration))
+	// 	isPreviousTimeClash = previousSessionEndTime.After(session.Time)
+	// }
 
-	endTime := session.Time.Add(time.Minute * time.Duration(session.Film.Duration))
-	isNextTimeClash := s.repository.FindByRoomAndTime(session.Room, session.Time, endTime)
+	// endTime := session.Time.Add(time.Minute * time.Duration(session.Film.Duration))
+	// isNextTimeClash := s.repository.FindByRoomAndTime(session.Room, session.Time, endTime)
 
-	return isPreviousTimeClash || isNextTimeClash
+	// return isPreviousTimeClash || isNextTimeClash
+	return false
 }
 
 func (s *Service) GetByFilmId(id string) ([]entities.Session, error) {

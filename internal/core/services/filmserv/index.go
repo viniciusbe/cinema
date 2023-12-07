@@ -28,7 +28,7 @@ func (s *Service) Get(id string) (*entities.Film, error) {
 	return s.repository.Find(id)
 }
 
-func (s *Service) Update(film *entities.Film, gendersID []uint) error {
+func (s *Service) Update(film *entities.Film, gendersID []string) error {
 	if len(gendersID) > 0 {
 		genders, err := s.repository.FindGendersById(gendersID)
 		film.Genders = genders
@@ -46,7 +46,7 @@ func (s *Service) Update(film *entities.Film, gendersID []uint) error {
 	return s.repository.Save(film)
 }
 
-func (s *Service) Create(film *entities.Film, gendersID []uint) error {
+func (s *Service) Create(film *entities.Film, gendersID []string) error {
 	genders, genderErr := s.repository.FindGendersById(gendersID)
 	if genderErr != nil {
 		return genderErr

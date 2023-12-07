@@ -5,13 +5,14 @@ import (
 	"cinema/internal/core/services/buyerserv"
 	"cinema/internal/repositories/neo4jdb/buyerrepo"
 	"cinema/internal/utils"
+	"context"
 	"fmt"
 
-	"gorm.io/gorm"
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
 
-func Route(db *gorm.DB) {
-	repo := buyerrepo.NewNeo4jRepository(db)
+func Route(driver neo4j.DriverWithContext, ctx context.Context) {
+	repo := buyerrepo.NewNeo4jRepository(driver, ctx)
 	serv := buyerserv.New(repo)
 
 out:

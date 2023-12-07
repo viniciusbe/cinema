@@ -66,7 +66,7 @@ func (r *Repository) Delete(id string) error {
 	return nil
 }
 
-func (r *Repository) FindGendersById(ids []uint) ([]entities.Gender, error) {
+func (r *Repository) FindGendersById(ids []string) ([]entities.Gender, error) {
 	var genders []entities.Gender
 	genderErr := r.DB.Find(&genders, ids).Error
 	if genderErr != nil {
@@ -76,7 +76,7 @@ func (r *Repository) FindGendersById(ids []uint) ([]entities.Gender, error) {
 	return genders, nil
 }
 
-func (r *Repository) FindDirectorById(id uint) (*entities.Director, error) {
+func (r *Repository) FindDirectorById(id string) (*entities.Director, error) {
 	var director *entities.Director
 	err := r.DB.First(&director, id).Error
 	if err != nil {

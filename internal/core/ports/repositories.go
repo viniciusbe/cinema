@@ -27,8 +27,8 @@ type FilmRepository interface {
 	Insert(film *entities.Film) error
 	Save(film *entities.Film) error
 	Delete(id string) error
-	FindGendersById(ids []uint) ([]entities.Gender, error)
-	FindDirectorById(id uint) (*entities.Director, error)
+	FindGendersById(ids []string) ([]entities.Gender, error)
+	FindDirectorById(id string) (*entities.Director, error)
 }
 
 type SessionRepository interface {

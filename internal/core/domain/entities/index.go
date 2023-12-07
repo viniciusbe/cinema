@@ -12,16 +12,16 @@ type Gender struct {
 
 type Director struct {
 	Name       string
-	DirectorID uint
+	DirectorID string
 	Films      []Film
 }
 
 type Film struct {
 	Name     string
-	Duration uint
+	Duration string
 	Synopsis string
-	Age      uint
-	FilmID   uint
+	Age      string
+	FilmID   string
 	Director Director
 	Genders  []Gender
 	Sessions []Session
@@ -39,7 +39,7 @@ type Session struct {
 type Buyer struct {
 	Name     string
 	Document string
-	BuyerID  uint
+	BuyerID  string
 	Tickets  []Ticket
 }
 
